@@ -1,13 +1,26 @@
 import React from 'react';
 import { ReactDOM } from 'react';
-import { Button } from 'antd';
+import Index from './pages/Home/index'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+
 import './App.css';
 
-const App = () => (
-  <div className="App">
-    <div class="resume">
-    </div>
-  </div>
-);
+const App = () => {
+
+  return(
+    <Router>
+    <Routes>
+    <Route path="/index" index element={<Index />} />
+
+    </Routes>
+  </Router>
+  );
+
+};
 
 export default App;

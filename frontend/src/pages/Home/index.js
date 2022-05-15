@@ -9,7 +9,7 @@
 
 import Skill from './components/Skill';
 import License from './components/License';
-import Model from './components/Model';
+import Bar from './components/HeaderBar';
 import { ContactUs } from './components/ContactEmail';
 import { message,Row, Col,Space,Timeline,Button,Drawer, Modal,Card, Form,Divider} from 'antd';
 import React, { useEffect, useState } from "react";
@@ -132,8 +132,10 @@ const showModalCOM = (prop) => {
 };
 
     return (
+        <div>
+            <Bar/>
     <div className="resume">
-            
+           
         <Row className='basic'>
             <Col xs={{span: 24}} md={{span:8}} lg={{span:9}}>
 
@@ -364,7 +366,7 @@ const showModalCOM = (prop) => {
                 </div> 
         </Modal>
 
-
+        </div>
     </div>)
         }
 
