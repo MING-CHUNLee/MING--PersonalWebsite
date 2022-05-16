@@ -8,9 +8,12 @@
  */
 const db = require('../models/index.js');
 
-  const getAllUserInfo = async () => {
-    let users = await db["USERS"].findAll({
-        attributes: ['username']
+  const getAllUserInfo = async (id) => {
+    let users = await db["USERS"].findAll({ 
+      where: {
+        id: id
+      },
+        attributes: ['username','image']
     });
     users = users.map((user) => {
         return user.dataValues;
