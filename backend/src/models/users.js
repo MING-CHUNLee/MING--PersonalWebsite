@@ -10,6 +10,8 @@
 const {
   Model
 } = require('sequelize');
+const bcrypt = require('bcrypt');
+
 module.exports = (sequelize, DataTypes) => {
   class USERS extends Model {
     /**
@@ -23,7 +25,15 @@ module.exports = (sequelize, DataTypes) => {
   }
   USERS.init({
     username: DataTypes.STRING,
-    password: DataTypes.STRING,
+    password: {
+      type: DataTypes.STRING,
+      // Storing passwords in plaintext in the database is terrible.
+      // Hashing the value with an appropriate cryptographic hash function is better.
+      set(value) {
+        const hash = bcrypt.hashSync(value, 10);
+        this.setDataValue('password', hash);
+      },
+    },
     mail: DataTypes.STRING,
     image: DataTypes.STRING,
     level:DataTypes.INTEGER,
@@ -31,5 +41,6 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'USERS',
   });
+  
   return USERS;
 };

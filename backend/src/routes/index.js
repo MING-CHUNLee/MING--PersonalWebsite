@@ -8,7 +8,8 @@
  */
 
 const express = require("express");
-const {userCotroller}=require("../controllers/index.js")
+const {userCotroller}=require("../controllers/index.js");
+const { UserService } = require("../services/index.js");
 const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
@@ -17,4 +18,5 @@ router.get('/', function (req, res) {
   });
 
 router.get('/user',userCotroller.getAllSeatInfo)
+router.post('/usera',UserService.creatUser)
 module.exports = router;
