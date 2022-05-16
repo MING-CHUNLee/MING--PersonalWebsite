@@ -1,16 +1,16 @@
 /*
  * @Author: your name
  * @Date: 2022-03-21 11:55:18
- * @LastEditTime: 2022-03-31 16:58:41
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-05-16 10:38:06
+ * @LastEditors: 20181101remon mindy80230@gmail.com
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \myresume\src\pages\Home\index.js
  */
 
-import Skill from './components/Skill';
-import License from './components/License';
-import Bar from './components/HeaderBar';
-import { ContactUs } from './components/ContactEmail';
+import Skill from '../components/Skill';
+import License from '../components/License';
+import Bar from '../components/HeaderBar';
+import { ContactUs } from '../components/ContactEmail';
 import { message,Row, Col,Space,Timeline,Button,Drawer, Modal,Card, Form,Divider} from 'antd';
 import React, { useEffect, useState } from "react";
 import './index.css';
