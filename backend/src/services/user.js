@@ -21,18 +21,16 @@ const getAllUserInfo = async (id) => {
   return users;
 };
 
-const creatUser = async () => {
+const creatUser = async (userData) => {
   await  db["USERS"]
-    .create({ username: "someone", password: "NotSo§tr0ngP4$SW0RD!" })
+    .create({ username: userData.username, password:userData.password,mail:userData.mail })
     .then((result) => {
-      return result; // 成功回傳result結果
+      return result ; // 成功回傳result結果
     })
     .catch((err) => {
       return err;
     });
-  console.log(user.password); // '7cfc84b8ea898bb72462e78b4643cfccd77e9f05678ec2ce78754147ba947acc'
-  console.log(user.getDataValue("password")); // '7cfc84b8ea898bb72462e78b4643cfccd77e9f05678ec2ce78754147ba947acc'
-  return user;
+ 
 };
 
 module.exports = {

@@ -33,6 +33,40 @@ const getAllSeatInfo = async (req, res) => {
   }
 };
 
+const userRegistration = async (req, res) => {
+
+  try {
+
+    if(!req.body?.username || !req.body?.password || !req.body?.mail ){
+      return res.status(400).json({
+        detail: "參數錯誤，請參考文件",
+      });
+    }
+    const emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+    if(req.body.mail.search(emailRule)=== -1){
+      return res.status(400).json({
+        detail: "參數錯誤，請參考文件",
+      });
+  }
+    const  insertValues = {
+      username: req.body.username,
+      password: req.body.password,
+      mail : req.body.mail ,
+    };
+    const userSingUpState = await UserService.creatUser (insertValues);
+    return res.status(200).json({
+      detail: userSingUpState,
+    });
+  
+  } catch (error) {
+    return res.status(500).json(
+      {
+      detail: "伺服器內部錯誤"+error+"?"+typeof(insertValues.username)
+    });
+  }
+};
+
 module.exports = {
   getAllSeatInfo,
+  userRegistration
 };

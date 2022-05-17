@@ -18,5 +18,5 @@ router.get('/', function (req, res) {
   });
 
 router.get('/user',userCotroller.getAllSeatInfo)
-router.post('/usera',UserService.creatUser)
+router.post('/usera',userCotroller.userRegistration)
 module.exports = router;

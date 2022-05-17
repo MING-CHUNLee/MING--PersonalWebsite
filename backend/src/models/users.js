@@ -34,7 +34,10 @@ module.exports = (sequelize, DataTypes) => {
         this.setDataValue('password', hash);
       },
     },
-    mail: DataTypes.STRING,
+    mail: {
+      type:DataTypes.STRING,
+      validate: {isEmail: true},    
+    },
     image: DataTypes.STRING,
     level:DataTypes.INTEGER,
   }, {
