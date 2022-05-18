@@ -12,6 +12,7 @@ const cors = require("cors");
 const router = require("./routes/index.js");
 app.use(cors());
 app.use("/api",router);
+require("dotenv").config();
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');

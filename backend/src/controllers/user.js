@@ -7,6 +7,7 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 const bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken");
 
 const { UserService } = require("../services/index.js");
 const getAllUserInfo = async (req, res) => {
@@ -97,13 +98,17 @@ const userLogin= async (req, res) => {
         detail: "帳號或密碼錯誤",
       });
     }
+
+    var token = jwt.sign({ username: existUser.id },process.env.JWT_SECRET);
+
     return res.status(200).json({
       detail: "登入成功",
+      token:token,
     });
   }
   catch(error){
     return res.status(500).json({
-      detail: "伺服器內部錯誤"+error,
+      detail: "伺服器內部錯誤"+error+"：：：："+process.env.JWT_SECRET,
     });
   }
 
