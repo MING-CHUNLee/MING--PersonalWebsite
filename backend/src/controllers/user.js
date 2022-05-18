@@ -9,15 +9,16 @@
 const bcrypt = require('bcrypt');
 
 const { UserService } = require("../services/index.js");
-const getAllSeatInfo = async (req, res) => {
+const getAllUserInfo = async (req, res) => {
   try {
-
+ 
     if(!req.body?.id){
       return res.status(400).json({
         detail: "參數錯誤，請參考文件",
       });
     }
-    const id=req.body.id;
+    const { body } = req;
+    const { id } = body;
     const users =await UserService.getAllUserInfo(id);
     return res.status(200).json({
       detail: "成功取得所有位置資訊",
@@ -42,8 +43,9 @@ const userRegistration = async (req, res) => {
         detail: "參數錯誤，請參考文件",
       });
     }
-  
-    const existUser = await UserService.checkMailExistOrNot(req.body?.mail );
+    const { body } = req;
+    const {username, password,mail } = body;
+    const existUser = await UserService.checkMailExistOrNot(mail);
     if (existUser) {
       return res.status(400).json(
         { detail: "該用戶已註冊" 
@@ -51,17 +53,12 @@ const userRegistration = async (req, res) => {
      
     }
     const emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-    if(req.body.mail.search(emailRule)=== -1){
+    if(mail.search(emailRule)=== -1){
       return res.status(400).json({
         detail: "參數錯誤，請參考文件",
       });
   }
-    const  insertValues = {
-      username: req.body.username,
-      password: req.body.password,
-      mail : req.body.mail ,
-    };
-    const userSingUpState = await UserService.creatUser (insertValues);
+    const userSingUpState = await UserService.creatUser (body);
     return res.status(200).json({
       detail: userSingUpState,
     });
@@ -74,7 +71,16 @@ const userRegistration = async (req, res) => {
   }
 };
 
+const userLogin= async (req, res) => {
+  try {
+
+  }
+  catch(error){
+
+  }
+
+}
 module.exports = {
-  getAllSeatInfo,
+  getAllUserInfo,
   userRegistration
 };

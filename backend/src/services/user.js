@@ -36,7 +36,7 @@ const creatUser = async (userData) => {
 };
 
 const checkMailExistOrNot=async(mail)=>{
-  let existsEmails = await db["USERS"].findOne({
+  const existsEmails = await db["USERS"].findOne({
     where: {
       mail: mail,
     }

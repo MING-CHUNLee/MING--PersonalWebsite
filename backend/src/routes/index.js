@@ -17,6 +17,8 @@ router.get('/', function (req, res) {
     res.send('Hello World!');
   });
 
-router.get('/user',userCotroller.getAllSeatInfo)
-router.post('/usera',userCotroller.userRegistration)
+router.get('/user',userCotroller.getAllUserInfo)
+router.post('/register',userCotroller.userRegistration)
+router.post('/login',userCotroller.userRegistration)
+
 module.exports = router;
