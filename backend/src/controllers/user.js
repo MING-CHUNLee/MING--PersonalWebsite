@@ -44,7 +44,7 @@ const userRegistration = async (req, res) => {
       });
     }
     const { body } = req;
-    const {username, password,mail } = body;
+    const { mail } = body;
     const existUser = await UserService.checkMailExistOrNot(mail);
     if (existUser) {
       return res.status(400).json(
@@ -73,14 +73,43 @@ const userRegistration = async (req, res) => {
 
 const userLogin= async (req, res) => {
   try {
+    if(!req.body?.mail || !req.body?.password){
+      return res.status(400).json({
+        detail: "參數錯誤，請參考文件",
+      });
+    }
+    const { body } = req;
+    const { mail, password} = body;
+    const existUser = await UserService.checkMailExistOrNot(mail);
+    if (!existUser) {
+      return res.status(400).json(
+        { detail: "查無此用戶" 
+      });
+    }
+    const compareResult = await bcrypt
+    .compare(password, existUser.password)
+    .then((result) => {
+      return result;
+    });
 
+    if (!compareResult) {
+      return res.status(403).json({
+        detail: "帳號或密碼錯誤",
+      });
+    }
+    return res.status(200).json({
+      detail: "登入成功",
+    });
   }
   catch(error){
-
+    return res.status(500).json({
+      detail: "伺服器內部錯誤"+error,
+    });
   }
 
 }
 module.exports = {
   getAllUserInfo,
-  userRegistration
+  userRegistration,
+  userLogin
 };
