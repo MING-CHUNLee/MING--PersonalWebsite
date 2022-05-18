@@ -42,12 +42,14 @@ const userRegistration = async (req, res) => {
         detail: "參數錯誤，請參考文件",
       });
     }
-    if(await UserService.checkMailExistOrNot(req.body.mail)){
-      return res.status(400).json({
-        detail: "信箱已註冊過",
+  
+    const existUser = await UserService.checkMailExistOrNot(req.body?.mail );
+    if (existUser) {
+      return res.status(400).json(
+        { detail: "該用戶已註冊" 
       });
+     
     }
-    
     const emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
     if(req.body.mail.search(emailRule)=== -1){
       return res.status(400).json({
