@@ -9,7 +9,6 @@
 
 const express = require("express");
 const {userCotroller}=require("../controllers/index.js");
-const { UserService } = require("../services/index.js");
 const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));

@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      COMMENTS.belongsTo*(
+        models.USERS,{
+          foreignKey: 'announcer' // 指定的 foreignKey name
+        })
     }
   }
   COMMENTS.init({

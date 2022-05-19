@@ -21,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      USERS.hasOne (
+        models.COMMENTS, { // 指定要關聯的 table
+          foreignKey: 'announcer' // 指定的 foreignKey name
+        });
+     
     }
   }
   USERS.init({
