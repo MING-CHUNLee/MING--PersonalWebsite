@@ -1,5 +1,6 @@
 const user = require('./user');
-
+const comment=require('./comment')
 module.exports={
-    UserService:user
+    UserService:user,
+    CommentService:comment
 }

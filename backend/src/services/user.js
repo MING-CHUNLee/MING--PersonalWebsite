@@ -44,8 +44,19 @@ const checkMailExistOrNot=async(mail)=>{
   return existsEmails;
 }
 
+const checkUserExistOrNot=async(id)=>{
+  const existsUser = await db["USERS"].findOne({
+    where: {
+      id: id,
+    }
+  });
+  return existsUser;
+}
+
+
 module.exports = {
   getAllUserInfo,
   creatUser,
   checkMailExistOrNot,
+  checkUserExistOrNot,
 };

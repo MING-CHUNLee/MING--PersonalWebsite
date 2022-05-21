@@ -8,7 +8,7 @@
  */
 
 const express = require("express");
-const {userCotroller}=require("../controllers/index.js");
+const {userCotroller,commentController}=require("../controllers/index.js");
 const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
@@ -19,5 +19,10 @@ router.get('/', function (req, res) {
 router.get('/user',userCotroller.getAllUserInfo)
 router.post('/register',userCotroller.userRegistration)
 router.post('/login',userCotroller.userLogin)
+router.get('/comment',commentController.getAllComment)
+router.post('/comment',commentController.createComment)
+router.patch('/comment',commentController.editComment)
+router.delete('/comment',commentController.delectComment)
+
 
 module.exports = router;
