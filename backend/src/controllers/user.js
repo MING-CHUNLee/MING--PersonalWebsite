@@ -98,9 +98,11 @@ const userLogin= async (req, res) => {
         detail: "帳號或密碼錯誤",
       });
     }
-
-    var token = jwt.sign({ username: existUser.id },process.env.JWT_SECRET);
-
+    var payload = {
+      id: existUser.id ,
+      expire: Date.now() + 1000 * 60 * 60 * 24 * 7, //7 days
+    };
+    var token = jwt.sign(payload,process.env.JWT_SECRET);
     return res.status(200).json({
       detail: "登入成功",
       token:token,

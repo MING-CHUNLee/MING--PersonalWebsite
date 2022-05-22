@@ -11,6 +11,10 @@ var app = express();
 const cors = require("cors");
 const router = require("./routes/index.js");
 app.use(cors());
+passport = require("passport");
+localStrategy = require("passport-local");
+
+
 app.use("/api",router);
 require("dotenv").config();
 
