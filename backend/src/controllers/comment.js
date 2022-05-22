@@ -38,10 +38,9 @@ const getAllComment = async (req, res) => {
         const comment =await CommentService.creatComment(body);
         return res.status(200).json({
           detail: "成功新增留言",
-          a:comment ,
+          a: req.tokenPayload.id  ,
         });
       
-    
     } catch (error) {
       return res.status(500).json(
         {

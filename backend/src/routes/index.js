@@ -8,11 +8,13 @@
  */
 
 const express = require("express");
-const {userCotroller,commentController}=require("../controllers/index.js");
-const memberAuth=require("../middleware/auth")
+const {userCotroller}=require("../controllers/index.js");
+const comment =require('./comment')
 const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
+router.use("/comment", comment);
+
 router.get('/', function (req, res) {
     res.send('Hello World!');
   });
@@ -20,10 +22,6 @@ router.get('/', function (req, res) {
 router.get('/user',userCotroller.getAllUserInfo)
 router.post('/register',userCotroller.userRegistration)
 router.post('/login',userCotroller.userLogin)
-router.get('/comment',commentController.getAllComment)
-router.post('/comment',memberAuth.verifyMemberToken,commentController.createComment)
-router.patch('/comment',commentController.editComment)
-router.delete('/comment',commentController.delectComment)
 
 
 module.exports = router;
