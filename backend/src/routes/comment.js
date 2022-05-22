@@ -4,8 +4,10 @@ const {commentController}=require("../controllers/index.js");
 const router = express.Router();
 
 router.get('/',commentController.getAllComment)
-router.use('/',memberAuth.verifyMemberToken)
 router.post('/',commentController.createComment)
+router.use('/',memberAuth.verifyMemberToken)
+router.use('/',memberAuth.isAuthor)
+
 router.patch('/',commentController.editComment)
 router.delete('/',commentController.delectComment)
 

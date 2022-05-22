@@ -15,10 +15,6 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 router.use("/comment", comment);
 
-router.get('/', function (req, res) {
-    res.send('Hello World!');
-  });
-
 router.get('/user',userCotroller.getAllUserInfo)
 router.post('/register',userCotroller.userRegistration)
 router.post('/login',userCotroller.userLogin)

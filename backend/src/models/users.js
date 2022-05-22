@@ -44,13 +44,14 @@ module.exports = (sequelize, DataTypes) => {
       validate: {isEmail: true},    
     },
     image: DataTypes.STRING,
-    level:DataTypes.INTEGER,
+    token:DataTypes.STRING,
     id:{
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
 
-    }
+    },  
+   
   }, {
     sequelize,
     modelName: 'USERS',

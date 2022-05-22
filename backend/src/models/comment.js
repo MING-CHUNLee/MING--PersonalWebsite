@@ -27,7 +27,10 @@ module.exports = (sequelize, DataTypes) => {
     announcer: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
-    }
+    }, isShow:{
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
   }, {
     sequelize,
     modelName: 'COMMENTS',

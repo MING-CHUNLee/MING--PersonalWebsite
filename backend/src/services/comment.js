@@ -2,7 +2,7 @@
 const db = require("../models/index.js");
 
 const getAllComment = async () => {
-  let comments = await db["COMMENTS"].findAll({
+  const comments = await db["COMMENTS"].findAll({
     attributes: ["context", "announcer"],
   });
   return comments;
@@ -10,7 +10,7 @@ const getAllComment = async () => {
 
 const creatComment = async (userData) => {
   await  db["COMMENTS"]
-    .create({ context: userData.context, announcer:userData.announcer})
+    .create({ context: userData.context, announcer:userData.announcer,isShow:userData.isShow})
     .then((result) => {
       return result ; // 成功回傳result結果
     })
@@ -21,6 +21,7 @@ const creatComment = async (userData) => {
 };
 
   const editComment = async (a) => {
+    
   await db["COMMENTS"].update(
     {
       context:a.context
@@ -39,6 +40,7 @@ const creatComment = async (userData) => {
 };
 
 const delectComment = async (a) => {
+
   await db["COMMENTS"].destroy({
     where: {
       id:a,
@@ -46,10 +48,21 @@ const delectComment = async (a) => {
   });
 };
 
+
+const checkAuthor = async (requester) => {
+  const comments = await db["COMMENTS"].findOne({
+    where: {
+      announcer: requester,
+    }
+  });
+  return comments;
+};
+
 module.exports = {
     getAllComment,
     creatComment,
     editComment,
-    delectComment
+    delectComment,
+    checkAuthor
  
 };

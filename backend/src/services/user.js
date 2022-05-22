@@ -10,16 +10,14 @@
 
 const db = require("../models/index.js");
 
-const getAllUserInfo = async (id) => {
-  let users = await db["USERS"].findAll({
+const getAllUserInfo = async (mail) => {
+  let users = await db["USERS"].findOne({
     where: {
-      id: id,
+      mail: mail,
     },
-    attributes: ["username", "image"],
+    attributes: ["username"],
   });
-  users = users.map((user) => {
-    return user.dataValues;
-  });
+
   return users;
 };
 
@@ -27,7 +25,8 @@ const creatUser = async (userData) => {
   await  db["USERS"]
     .create({ username: userData.username, password:userData.password,mail:userData.mail })
     .then((result) => {
-      return result ; // 成功回傳result結果
+  
+     return result; // 成功回傳result結果
     })
     .catch((err) => {
       return err;
@@ -53,10 +52,28 @@ const checkUserExistOrNot=async(id)=>{
   return existsUser;
 }
 
+const addToken = async (mail,token) => {
+  await db["USERS"].update(
+    {
+      token:token
+    },
+    {
+      where: {
+        mail:mail,
+      },
+    }
+  )  .then((result) => {
+    return result ;
+  })
+  .catch((err) => {
+    return err;
+  });
+};
 
 module.exports = {
   getAllUserInfo,
   creatUser,
   checkMailExistOrNot,
   checkUserExistOrNot,
+  addToken
 };

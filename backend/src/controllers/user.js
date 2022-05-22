@@ -22,7 +22,7 @@ const getAllUserInfo = async (req, res) => {
     const { id } = body;
     const users =await UserService.getAllUserInfo(id);
     return res.status(200).json({
-      detail: "成功取得所有位置資訊",
+      detail: "成功取得使用者",
       users: [...users.values()],
     });
   
@@ -60,6 +60,7 @@ const userRegistration = async (req, res) => {
       });
   }
     const userSingUpState = await UserService.creatUser (body);
+  
     return res.status(200).json({
       detail: userSingUpState,
     });
@@ -103,14 +104,19 @@ const userLogin= async (req, res) => {
       expire: Date.now() + 1000 * 60 * 60 * 24 * 7, //7 days
     };
     var token = jwt.sign(payload,process.env.JWT_SECRET);
+
+    await UserService.addToken(mail,token)
+    const getInfo= await UserService.getAllUserInfo(mail);
+
     return res.status(200).json({
       detail: "登入成功",
       token:token,
+      getInfo:getInfo
     });
   }
   catch(error){
     return res.status(500).json({
-      detail: "伺服器內部錯誤"+error+"：：：："+process.env.JWT_SECRET,
+      detail: "伺服器內部錯誤",
     });
   }
 

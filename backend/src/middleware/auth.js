@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const { CommentService }=require('../services/index')
 
 const verifyMemberToken = async (req, res, next) => {
   try {
@@ -39,14 +40,21 @@ const verifyMemberToken = async (req, res, next) => {
   }
 };
 
-const isAdmin = async (req, res, next) => {
+const isAuthor= async (req, res, next) => {
   try {
-    // level: 0->admin, 1->member, 2->others
-    if (!req?.tokenPayload || req.tokenPayload?.level) {
+    if (!req?.tokenPayload) {
       return res.status(403).json({
-        detail: "特權使用者授權錯誤",
+        detail: "授權錯誤",
       });
     }
+    const {tokenPayload}=req;
+    const originalAuthor=await CommentService.checkAuthor(tokenPayload.id);
+    if (!originalAuthor) {
+      return res.status(400).json(
+        { detail: "請求錯誤" 
+      });
+    }
+
     next();
   } catch (err) {
     return res.status(500).json({
@@ -57,5 +65,5 @@ const isAdmin = async (req, res, next) => {
 
 module.exports = {
   verifyMemberToken,
-  isAdmin,
+  isAuthor,
 };

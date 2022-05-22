@@ -31,8 +31,8 @@ module.exports = {
         type: Sequelize.STRING,
       },
       // 0: admin, 1: general, 2: others
-      level: {
-        type: Sequelize.INTEGER,
+      token: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

@@ -11,6 +11,10 @@ module.exports = {
       context: {
         type: Sequelize.STRING
       },
+      isShow:{
+        type: Sequelize.BOOLEAN,
+        defaultValue: true,
+      },
       announcer: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,

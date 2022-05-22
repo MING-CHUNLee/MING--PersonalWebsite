@@ -22,23 +22,27 @@ const getAllComment = async (req, res) => {
   const createComment = async (req, res) => {
 
     try {
-        if(!req.body?.context || !req.body?.announcer){
+        if(!req.body?.context || !req.body?.isShow){
             return res.status(400).json({
               detail: "參數錯誤，請參考文件",
             });
           }
           const { body }=req;
-          const { announcer }=body;
-          const existsUser=await UserService.checkUserExistOrNot(announcer);
-          if (!existsUser) {
-            return res.status(400).json(
-              { detail: "查無此用戶" 
-            });
+          
+          if(!req.body?.announcer){
+            body.announcer=process.env.VISTOR
+          }else{
+            const { announcer }=body;
+            const existsUser=await UserService.checkUserExistOrNot(announcer);
+            if (!existsUser) {
+              body.announcer=process.env.VISTOR
+            }
           }
-        const comment =await CommentService.creatComment(body);
+        
+        await CommentService.creatComment(body);
         return res.status(200).json({
           detail: "成功新增留言",
-          a: req.tokenPayload.id  ,
+
         });
       
     } catch (error) {
@@ -57,7 +61,6 @@ const getAllComment = async (req, res) => {
             });
           }
         const { body }=req;
-
         const comment =await CommentService.editComment(body);
         return res.status(200).json({
           detail: "成功修改留言",
