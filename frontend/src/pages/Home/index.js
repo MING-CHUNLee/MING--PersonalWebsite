@@ -30,7 +30,8 @@ import LinkerMerit from './image/LinkerMerit.jpeg';
 import SmallProjectMerit from './image/SmallProjectMerit.jpeg';
 import SmallSubject from './image/SmallSubject.jpg';
 import SpecialSubject from './image/SpecialSubject.jpg';
-
+import { Layout } from 'antd';
+const { Header, Footer, Sider, Content } = Layout;
 const Home =()=>{
     
     const [visible, setVisible] = useState(false);
@@ -134,6 +135,7 @@ const showModalCOM = (prop) => {
     return (
         <div>
             <Bar/>
+            <Content>
     <div className="resume">
            
         <Row className='basic'>
@@ -365,8 +367,9 @@ const showModalCOM = (prop) => {
                     <img src={Linker2019} alt="SmallSubject"/> 
                 </div> 
         </Modal>
-
+       
         </div>
+        </Content>
     </div>)
         }
 

@@ -1,7 +1,7 @@
 @import '~antd/dist/antd.css';
-
+@import './pages/Home/comment.css';
 @dark-color: #343a40;
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -38,4 +38,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */

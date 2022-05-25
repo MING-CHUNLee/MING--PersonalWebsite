@@ -21,7 +21,7 @@ export const HeaderBar = () => {
     window.location.reload();
   };
   return (
-    <div>
+  
       <Header className="black">
         <Row>
           <Col
@@ -32,8 +32,8 @@ export const HeaderBar = () => {
           >
             時光屋座位使用管理系統
           </Col>
-          <Menu mode="horizontal" defaultSelectedKeys={["mail"]} onClick={onClick}>
-            <Menu.Item key="/">AAA
+          <Menu mode="horizontal" defaultSelectedKeys={["index"]} onClick={onClick}>
+            <Menu.Item key="/comment">AAA
              </Menu.Item>
       <Menu.Item key="/index">
               
@@ -60,7 +60,7 @@ export const HeaderBar = () => {
           </Col>
         </Row>
       </Header>
-    </div>
+   
   );
 };
 export default HeaderBar;
