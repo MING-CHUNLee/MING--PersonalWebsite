@@ -1,148 +1,99 @@
-import { Avatar, Button, List, Skeleton,Form, Input, InputNumber } from 'antd';
-import { useEffect, useState } from 'react';
-import Bar from '../components/HeaderBar';
-import './index.css';
-import { Layout } from 'antd';
+import { Avatar, Button, Comment, Form, Input, List } from "antd";
+import moment from "moment";
+import { useState ,useEffect} from "react";
+import Bar from "../components/HeaderBar";
+import { Layout } from "antd";
+import axios from "../../Axios.config";
 const { Header, Footer, Sider, Content } = Layout;
-const { TextArea } = Input;
-const count = 3;
-const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
 
 const App = () => {
-  const [initLoading, setInitLoading] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-  const [list, setList] = useState([]);
-  useEffect(() => {
-    fetch(fakeDataUrl)
-      .then((res) => res.json())
-      .then((res) => {
-        setInitLoading(false);
-        setData(res.results);
-        setList(res.results);
-      });
-  }, []);
+  const [comment, setComment] = useState([]);
 
-  const onLoadMore = () => {
-    setLoading(true);
-    setList(
-      data.concat(
-        [...new Array(count)].map(() => ({
-          loading: true,
-          name: {},
-          picture: {},
-        })),
-      ),
-    );
-    fetch(fakeDataUrl)
-      .then((res) => res.json())
-      .then((res) => {
-        const newData = data.concat(res.results);
-        setData(newData);
-        setList(newData);
-        setLoading(false); // Resetting window's offsetTop so as to display react-virtualized demo underfloor.
-        // In real scene, you can using public method of react-virtualized:
-        // https://stackoverflow.com/questions/46700726/how-to-use-public-method-updateposition-of-react-virtualized
-
-        window.dispatchEvent(new Event('resize'));
-      });
+  const getComment = () => {
+    axios.get(`/api/comment`).then((res) => {
+      setComment(res.data.a);
+    });
   };
 
-  const loadMore =
-    !initLoading && !loading ? (
-      <div
-        style={{
-          textAlign: 'center',
-          marginTop: 12,
-          height: 32,
-          lineHeight: '32px',
-        }}
-      >
-        <Button onClick={onLoadMore}>loading more</Button>
-      </div>
-    ) : null;
+  useEffect(() => {
+    getComment();
+    let timer = setInterval(() => {
+      getComment();
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+  const onFinish = (values) => {
 
-    const onFinish = (values) => {
-      console.log('Success:', values);
+    var udata = JSON.stringify({
+      context:  values.context,
+      isShow:"true"
+    });
+
+    var config = {
+      method: 'post',
+      url: '/api/comment',
+      data : udata
     };
-  
-    const onFinishFailed = (errorInfo) => {
-      console.log('Failed:', errorInfo);
-    };
-  
+    
+    axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+  };
   return (
-      <div>
-          <Bar/>
-          <Content>
-
-
-    <div className="resume">
-    您尚未登入，將以訪客身份留言。亦可登入留言
-          <Form
+    <div>
+      <Bar />
+      <Content>
+        <div className="resume">
+        <Form
       name="basic"
-      labelCol={{
-        span: 8,
-      }}
-      wrapperCol={{
-        span: 16,
-      }}
-      initialValues={{
-     
-      }}
+      labelCol={{ span: 8 }}
+      wrapperCol={{ span: 16 }}
+      initialValues={{ remember: true }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-   
       <Form.Item
-        label="Password"
+        label="context"
         name="context"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your password!',
-          },
-        ]}
+        rules={[{ required: true, message: 'Please input your username!' }]}
       >
-        <Input.TextArea />
+         <Input.TextArea />
       </Form.Item>
 
 
-
-      <Form.Item
-        wrapperCol={{
-          offset: 8,
-          span: 16,
-        }}
-      >
+      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
         <Button type="primary" htmlType="submit">
           Submit
         </Button>
       </Form.Item>
     </Form>
-    <List
-      className="demo-loadmore-list"
-      loading={initLoading}
-      itemLayout="horizontal"
-      loadMore={loadMore}
-      dataSource={list}
-      renderItem={(item) => (
-        <List.Item
-          actions={[<a key="list-loadmore-edit">edit</a>, <a key="list-loadmore-more">more</a>]}
-        >
-          <Skeleton avatar title={false} loading={item.loading} active>
-            <List.Item.Meta
-              avatar={<Avatar src={item.picture.large} />}
-              title={<a href="https://ant.design">{item.name?.last}</a>}
-              description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-            />
-            <div>content</div>
-          </Skeleton>
-        </List.Item>
-      )}
-    />
-    </div>
-    </Content>
+          <List
+            className="comment-list"
+            header={`${comment.length} replies`}
+            itemLayout="horizontal"
+            dataSource={comment}
+            renderItem={(item) => (
+              <li>
+                <Comment
+                  author={item.announcer}
+                  avatar={"https://joeschmoe.io/api/v1/random"}
+                  content={item.context}
+                />
+              </li>
+            )}
+          />
+        </div>
+      </Content>
     </div>
   );
 };
