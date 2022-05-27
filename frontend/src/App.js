@@ -1,7 +1,9 @@
-import React from 'react';
-import { ReactDOM } from 'react';
-import Index from './pages/Home/index'
-import Comment from './pages/Home/comments'
+import React from "react";
+import { ReactDOM } from "react";
+import Index from "./pages/Home/index";
+import Register from "./pages/Home/register";
+import Login from "./pages/Home/login";
+import Comment from "./pages/Home/comments";
 import {
   BrowserRouter as Router,
   Routes,
@@ -9,19 +11,27 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import './App.css';
+import "./App.css";
 
 const App = () => {
-
-  return(
+  const user = localStorage.getItem("authorized_keys");
+  return (
     <Router>
-    <Routes>
-    <Route path="/index" index element={<Index />} />
-    <Route path="/comment" element={<Comment />} />
-    </Routes>
-  </Router>
+      {user ? (
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/comment" element={<Comment />} />
+        </Routes>
+      ) : (
+        // <Route path="*" element={<Button>sddsd</Button>} />
+        <Route path="*" element={<Login />} />
+      )}
+      <Routes>
+        <Route path="/login" index element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </Router>
   );
-
 };
 
 export default App;
