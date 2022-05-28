@@ -22,7 +22,7 @@ const getAllComment = async (req, res) => {
   const createComment = async (req, res) => {
 
     try {
-        if(!req.body?.context || !req.body?.isShow){
+        if(!req.body?.context || !req.body?.isShow||!req.body?.id){
             return res.status(400).json({
               detail: "參數錯誤，請參考文件",
             });
@@ -38,7 +38,8 @@ const getAllComment = async (req, res) => {
           //     body.announcer=process.env.VISTOR
           //   }
           // }
-          const existsUser=await UserService.checkUserExistOrNot(announcer);
+        
+          const existsUser=await UserService.checkUserExistOrNot(body.id);
           if (!existsUser) {
             return res.status(400).json({
               detail: "參數錯誤",
@@ -53,7 +54,8 @@ const getAllComment = async (req, res) => {
     } catch (error) {
       return res.status(500).json(
         {
-        detail: "伺服器內部錯誤"+error
+         
+        detail: "伺服器內部錯誤"+error+"!!!"
       });
     }
   };
@@ -82,16 +84,15 @@ const getAllComment = async (req, res) => {
 
   const delectComment = async (req, res) => {
     try {
-        if(!req.body?.id){
+        if(!req.params?.id){
             return res.status(400).json({
               detail: "參數錯誤，請參考文件",
             });
           }
-        const { body }=req;
-        const { id }=body;
+        const id=req.params.id;
         const comment =await CommentService.delectComment(id);
         return res.status(200).json({
-          detail: "成功刪除留言",
+          detail: "成功刪除留言"+id,
           a:comment ,
         });
       
