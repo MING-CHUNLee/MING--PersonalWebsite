@@ -29,16 +29,21 @@ const getAllComment = async (req, res) => {
           }
           const { body }=req;
           
-          if(!req.body?.announcer){
-            body.announcer=process.env.VISTOR
-          }else{
-            const { announcer }=body;
-            const existsUser=await UserService.checkUserExistOrNot(announcer);
-            if (!existsUser) {
-              body.announcer=process.env.VISTOR
-            }
+          // if(!req.body?.isShow){
+          //   body.announcer=process.env.VISTOR
+          // }else{
+          //   const { announcer }=body;
+          //   const existsUser=await UserService.checkUserExistOrNot(announcer);
+          //   if (!existsUser) {
+          //     body.announcer=process.env.VISTOR
+          //   }
+          // }
+          const existsUser=await UserService.checkUserExistOrNot(announcer);
+          if (!existsUser) {
+            return res.status(400).json({
+              detail: "參數錯誤",
+            });
           }
-        
         await CommentService.creatComment(body);
         return res.status(200).json({
           detail: "成功新增留言",

@@ -3,6 +3,9 @@ const db = require("../models/index.js");
 
 const getAllComment = async () => {
   const comments = await db["COMMENTS"].findAll({
+    include: [
+      { model: db["USERS"], attributes: ["username"]}
+   ],
     attributes: ["context", "announcer"],
   });
   return comments;
