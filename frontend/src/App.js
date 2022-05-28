@@ -24,12 +24,13 @@ const App = () => {
         </Routes>
       ) : (
         // <Route path="*" element={<Button>sddsd</Button>} />
-        <Route path="*" element={<Login />} />
-      )}
-      <Routes>
+        <Routes>
+        <Route path="*" index element={<Login />} />
         <Route path="/login" index element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>
+      )}
+    
     </Router>
   );
 };

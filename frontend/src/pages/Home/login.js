@@ -24,7 +24,12 @@ const App = () => {
       .then(function (response) {
         console.log(JSON.stringify(response.data));
         localStorage.setItem("authorized_keys", response.data.token);
-        localStorage.setItem("username", response.data.getInfo.username);
+        if(values.isShow){
+          localStorage.setItem("username", "匿名");
+        }else{
+          localStorage.setItem("username", response.data.getInfo.username);
+        }
+       
         navigate("/",{replace:true});
         window.location.reload();
       })
@@ -81,16 +86,16 @@ const App = () => {
         <Input.Password />
       </Form.Item>
 
-      {/* <Form.Item
-        name="remember"
+      <Form.Item
+        name="isShow"
         valuePropName="checked"
         wrapperCol={{
           offset: 8,
           span: 16,
         }}
       >
-        <Checkbox>Remember me</Checkbox>
-      </Form.Item> */}
+        <Checkbox>匿名登入</Checkbox>
+      </Form.Item>
 
       <Form.Item
         wrapperCol={{
