@@ -6,14 +6,14 @@ const getAllComment = async () => {
     include: [
       { model: db["USERS"], attributes: ["username"]}
    ],
-    attributes: ["context", "announcer"],
+    attributes: ["id","context", "announcer"],
   });
   return comments;
 };
 
 const creatComment = async (userData) => {
   await  db["COMMENTS"]
-    .create({ context: userData.context, announcer:userData.announcer,isShow:userData.isShow})
+    .create({ context: userData.context, announcer:userData.id,isShow:userData.isShow})
     .then((result) => {
       return result ; // 成功回傳result結果
     })

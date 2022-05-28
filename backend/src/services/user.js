@@ -15,7 +15,7 @@ const getAllUserInfo = async (mail) => {
     where: {
       mail: mail,
     },
-    attributes: ["username"],
+    attributes: ["username","id"],
   });
 
   return users;
