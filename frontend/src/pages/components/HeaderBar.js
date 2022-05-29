@@ -7,17 +7,17 @@ import { LogoutOutlined } from "@ant-design/icons";
 const { Header } = Layout;
 
 export const HeaderBar = () => {
-  const [current, setCurrent] = React.useState("mail");
   const navigate = useNavigate();
   const onClick = (e) => {
     console.log("click ", e);
-    setCurrent(e.key);
+  
     navigate(e.key,{replace:true});
   };
 
   // const navigate = useNavigate();
   const handleLogout = (e) => {
     localStorage.removeItem("authorized_keys");
+    localStorage.removeItem("id");
     window.location.reload();
   };
   return (

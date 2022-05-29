@@ -37,7 +37,7 @@ const App = () => {
   };
 
   return (
-    <div class="form">
+    <div className='container'>
     <Form
       name="basic"
       labelCol={{
@@ -52,6 +52,7 @@ const App = () => {
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
+      class="form"
     >
         <Form.Item
         label="username"

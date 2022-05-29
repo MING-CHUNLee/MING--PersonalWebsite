@@ -1,5 +1,13 @@
+.container{
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  height: 100vh; 
+  border: 2px dotted orange;
+  /* margin-top: 25vh; */
+}
 .form {
-    margin: 0 auto;
+  margin: auto;     
     position: relative;
     align-items: flex-start;
     justify-content: center;

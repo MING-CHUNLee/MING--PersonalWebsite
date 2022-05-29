@@ -44,7 +44,8 @@ const App = () => {
   };
 
   return (
-    <div class="form">
+    <div >
+    <div className='container'>
     <Form
       name="basic"
       labelCol={{
@@ -59,6 +60,7 @@ const App = () => {
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
+      class="form"
     >
       <Form.Item
         label="mail"
@@ -109,6 +111,7 @@ const App = () => {
         </Button>
       </Form.Item>
     </Form>
+    </div>
     </div>
   );
 };
