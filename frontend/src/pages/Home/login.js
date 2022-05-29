@@ -24,6 +24,7 @@ const App = () => {
       .then(function (response) {
         console.log(JSON.stringify(response.data));
         localStorage.setItem("authorized_keys", response.data.token);
+        localStorage.setItem("id", response.data.getInfo.id);
         if(values.isShow){
           localStorage.setItem("username", "匿名");
         }else{

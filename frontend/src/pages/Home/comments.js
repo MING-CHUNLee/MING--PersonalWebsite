@@ -1,19 +1,47 @@
-import { Avatar, Button, Comment, Form, Input, List, Row, Col } from "antd";
-import moment from "moment";
+import { Avatar, Button, Comment, Form, Input, List, Row, Col,Modal  } from "antd";
 import { useState, useEffect } from "react";
 import Bar from "../components/HeaderBar";
 import { Layout } from "antd";
 import axios from "../../Axios.config";
+import CollectionCreateForm from '../components/CollectionCreateForm'
 import { DownloadOutlined } from "@ant-design/icons";
 const { Header, Footer, Sider, Content } = Layout;
 
 const App = () => {
   const [comment, setComment] = useState([]);
+  const [edit, setEdit] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
+  const showModal = (context) => {
+    setEdit(context)
+    console.log(context)
+    setIsModalVisible(true);
+  };
+
+  const onCancel = () => {
+    setIsModalVisible(false);
+  };
+
+ 
   const getComment = () => {
-    axios.get(`/api/comment`).then((res) => {
-      setComment(res.data.a);
-    });
+    // axios.get(`/api/comment`).then((res) => {
+    //   setComment(res.data.a);
+    // });
+    var config = {
+      method: "get",
+      url: "/api/comment", 
+       headers: {
+        authorization: `Bearer ` + localStorage.getItem("authorized_keys"),
+      },
+    };
+
+    axios(config)
+      .then(function (response) {
+        setComment(response.data.a);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -24,26 +52,81 @@ const App = () => {
     return () => clearInterval(timer);
   }, []);
   const onFinish = (values) => {
+    let Show;
+    if(localStorage.getItem("username")==="匿名"){
+      Show="false";
+    }else{
+      Show=1;
+    }
     var udata = JSON.stringify({
       context: values.context,
-      isShow: "true",
+      isShow: Show,
+      id:localStorage.getItem("id")
     });
 
     var config = {
       method: "post",
-      url: "/api/comment",
+      url: "/api/comment", 
+       headers: {
+        authorization: `Bearer ` + localStorage.getItem("authorized_keys"),
+      },
       data: udata,
     };
 
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
+        getComment();
       })
       .catch(function (error) {
         console.log(error);
       });
   };
+  const onFinish2 = (values) => {
+    setIsModalVisible(false)
+    var data = JSON.stringify({
+      "context":values.editContext,
+      "id": values.id
+    });
+    
+    var config = {
+      method: 'patch',
+      url: '/api/comment',
+      headers: { 
+        authorization: `Bearer ` + localStorage.getItem("authorized_keys"),
+      },
+      data : data
+    };
+    
+    axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+      getComment();
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  };
+const Delete=(id)=>{
 
+  var config = {
+    method: 'delete',
+    url: '/api/comment/'+id,
+    headers: { 
+      authorization: `Bearer ` + localStorage.getItem("authorized_keys"),
+    },
+  
+  };
+  
+  axios(config)
+  .then(function (response) {
+    console.log(JSON.stringify(response.data));
+    getComment();
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
@@ -77,7 +160,7 @@ const App = () => {
               </Button>
             </Form.Item>
           </Form>
-          <List
+          <List 
             className="comment-list"
             header={`${comment.length} replies`}
             itemLayout="horizontal"
@@ -88,18 +171,27 @@ const App = () => {
                   <Col span={22}>
                     {" "}
                     <Comment
-                      author={item.announcer}
+                       key={item.id}
+                      author={item.USER.username}
                       avatar={"https://joeschmoe.io/api/v1/random"}
                       content={item.context}
                     />
                   </Col>
-                  {item.announcer ===localStorage.getItem("username")?(
+                  {item.announcer ===localStorage.getItem("id")?(
+                    <>
+                     <Button key={item.id} type="primary" onClick={() =>showModal(item)}>
+                      
+                  編輯
+                  </Button>
                     <Button
                     type="primary"
                     shape="round"
                     icon={<DownloadOutlined />}
                     size={"small"}
+                    onClick={() => Delete(item.id)}
                   />
+                 
+                </>
                   ) : (
                     ""
                   )}
@@ -110,7 +202,14 @@ const App = () => {
           />
         </div>
       </Content>
+      <CollectionCreateForm
+          visible={isModalVisible}
+          onFinish={(e) => onFinish2(e)}
+          onCancel={onCancel}
+          data={edit}
+        />
     </div>
+    
   );
 };
 
