@@ -10,8 +10,8 @@ export const HeaderBar = () => {
   const navigate = useNavigate();
   const onClick = (e) => {
     console.log("click ", e);
-  
-    navigate(e.key,{replace:true});
+
+    navigate(e.key, { replace: true });
   };
 
   // const navigate = useNavigate();
@@ -21,46 +21,47 @@ export const HeaderBar = () => {
     window.location.reload();
   };
   return (
-  
-      <Header className="black">
-        <Row>
-          <Col
-            style={{
-              verticalAlign: "middle",
-              color: "white",
+    <Header className="black">
+      <Row>
+        {/* <Col
+          style={{
+            verticalAlign: "middle",
+            color: "white",
+          }}
+          span
+        >
+          時光屋座位使用管理系統
+        </Col> */}
+        <Col>
+        <Menu
+          mode="horizontal"
+          defaultSelectedKeys={["index"]}
+          onClick={onClick}
+        >
+          <Menu.Item key="/comment">留言板</Menu.Item>
+          <Menu.Item key="/">履歷</Menu.Item>
+        </Menu>
+        </Col>
+        <Col
+          span={2}
+          push={18}
+          style={{
+            verticalAlign: "middle",
+            color: "white",
+          }}
+        >
+          <Button
+            style={{ background: "#363F4E", color: "white" }}
+            icon={<LogoutOutlined />}
+            onClick={(e) => {
+              handleLogout(e);
             }}
           >
-            時光屋座位使用管理系統
-          </Col>
-          <Menu mode="horizontal" defaultSelectedKeys={["index"]} onClick={onClick}>
-            <Menu.Item key="/comment">AAA
-             </Menu.Item>
-      <Menu.Item key="/index">
-              
-        AAAA
-      </Menu.Item>
-          </Menu>
-          <Col
-            span={2}
-            push={18}
-            style={{
-              verticalAlign: "middle",
-              color: "white",
-            }}
-          >
-            <Button
-              style={{ background: "#363F4E", color: "white" }}
-              icon={<LogoutOutlined />}
-              onClick={(e) => {
-                handleLogout(e);
-              }}
-            >
-              LOGOUT
-            </Button>
-          </Col>
-        </Row>
-      </Header>
-   
+            LOGOUT
+          </Button>
+        </Col>
+      </Row>
+    </Header>
   );
 };
 export default HeaderBar;

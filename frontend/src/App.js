@@ -1,5 +1,4 @@
 import React from "react";
-import { ReactDOM } from "react";
 import Index from "./pages/Home/index";
 import Register from "./pages/Home/register";
 import Login from "./pages/Home/login";
@@ -25,7 +24,7 @@ const App = () => {
       ) : (
         // <Route path="*" element={<Button>sddsd</Button>} />
         <Routes>
-        <Route path="*" index element={<Login />} />
+           <Route path="*" element={<Login/>} />
         <Route path="/login" index element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>

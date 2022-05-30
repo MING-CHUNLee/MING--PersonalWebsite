@@ -1,8 +1,10 @@
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input,Switch } from 'antd';
 import "./login.css";
 import axios from "../../Axios.config";
 import { useNavigate } from "react-router-dom";
-
+import {
+  LockOutlined,MailOutlined
+} from '@ant-design/icons';
 const App = () => {
     const navigate = useNavigate();
 
@@ -43,27 +45,34 @@ const App = () => {
     console.log('Failed:', errorInfo);
   };
 
+  const onClick=(e)=>{
+
+    console.log("A")
+    navigate('/register', { replace: true });
+  }
   return (
     <div >
     <div className='container'>
+    
     <Form
       name="basic"
-      labelCol={{
-        span: 8,
-      }}
+     
       wrapperCol={{
-        span: 16,
+        span: 24,
       }}
-      initialValues={{
-        remember: true,
-      }}
+
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
-      class="form"
+      
     >
+      <div  style={{textAlign:"center"}}>
+      <h1> <b>Log In</b></h1>
+        <h4>Don't have an account? <Button type="link"  onClick={onClick}>Sign up</Button></h4>
+        <br/>
+      </div>
+       
       <Form.Item
-        label="mail"
         name="mail"
         rules={[
             { type: "email", message: "請輸入有效的郵件地址" },
@@ -73,11 +82,10 @@ const App = () => {
             },
           ]}
       >
-        <Input />
+        <Input  size="large" prefix={  <MailOutlined className="site-form-item-icon"/>} placeholder="Mail"/>
       </Form.Item>
-
+    
       <Form.Item
-        label="Password"
         name="password"
         rules={[
           {
@@ -86,18 +94,11 @@ const App = () => {
           },
         ]}
       >
-        <Input.Password />
+        <Input.Password  size="large" prefix={<LockOutlined />} placeholder="Password"/>
       </Form.Item>
 
-      <Form.Item
-        name="isShow"
-        valuePropName="checked"
-        wrapperCol={{
-          offset: 8,
-          span: 16,
-        }}
-      >
-        <Checkbox>匿名登入</Checkbox>
+      <Form.Item name="isShow" label="匿名" valuePropName="checked">
+        <Switch size="small"/>
       </Form.Item>
 
       <Form.Item
@@ -106,8 +107,8 @@ const App = () => {
           span: 16,
         }}
       >
-        <Button type="primary" htmlType="submit">
-          Submit
+        <Button ghost type="primary" htmlType="submit" shape="round">
+          LOG IN
         </Button>
       </Form.Item>
     </Form>

@@ -19,9 +19,8 @@ h2{
     /* display: flex; */
     max-width: 80vw;
     border: solid 3px rgb(36, 18, 18);
-    /* padding: 50px; */
     position: relative;
-    margin: 3vw;
+    margin: auto;
   }
 .basic{
   background-color: #647b71;

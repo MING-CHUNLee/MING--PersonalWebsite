@@ -175,6 +175,7 @@ const Delete=(id)=>{
                       author={item.USER.username}
                       avatar={"https://joeschmoe.io/api/v1/random"}
                       content={item.context}
+                      datetime={item.updatedAt}
                     />
                   </Col>
                   {item.announcer ===localStorage.getItem("id")?(
