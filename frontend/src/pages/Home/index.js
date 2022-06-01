@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2022-03-21 11:55:18
- * @LastEditTime: 2022-06-01 16:13:01
+ * @LastEditTime: 2022-06-01 17:05:18
  * @LastEditors: 20181101remon mindy80230@gmail.com
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \myresume\src\pages\Home\index.js
@@ -47,10 +47,8 @@ const Home = () => {
     setVisible(false);
   };
   const onClick = (e) => {
-    console.log(e.key)
-    navigate(e.key, { replace: true });
-
-    
+    console.log(e);
+    navigate(e, { replace: true });
   };
   return (
     <div>
@@ -65,38 +63,35 @@ const Home = () => {
                     <img src={myface} alt="myface" className="myface" />
                   </div>
                   <Space direction="vertical" size="small">
-                        <Button  
-                            type="dark"  
-                            icon={<MailOutlined />} 
-                            onClick={showDrawer}
-                            block
-                        >
-                            Send mail to mindy80230
-                        </Button>
-                        <Drawer title="與李明錞聯繫" placement="right" onClose={onClose} visible={visible}>
-                            <ContactUs/>
-                        </Drawer>
-                    
                     <Button
-                        type="dark"
-                        href={"tel:+886-34253468"}
-                        icon={<PhoneOutlined />}
-                        onClick={() => this.enterLoading(1)}
-                        block
+                      type="dark"
+                      icon={<MailOutlined />}
+                      onClick={showDrawer}
+                      block
                     >
-                    Call to 0934-253-468
+                      Send mail to mindy80230
                     </Button>
-                
+                    <Drawer
+                      title="與李明錞聯繫"
+                      placement="right"
+                      onClose={onClose}
+                      visible={visible}
+                    >
+                      <ContactUs />
+                    </Drawer>
+
                     <Button
-                        type="dark"
-                        href={"https://github.com/MING-CHUNLee"}
-                        icon={<GithubOutlined />}
-                        onClick={() => this.enterLoading(1)}
-                        block
-                        >
-                        Check MING github!
+                      type="dark"
+                      href={"tel:+886-34253468"}
+                      icon={<PhoneOutlined />}
+                      onClick={() => this.enterLoading(1)}
+                      block
+                    >
+                      Call to 0934-253-468
                     </Button>
-                    </Space>
+
+                    <Button block>Check MING github!</Button>
+                  </Space>
                 </Col>
               </Row>
             </Col>
@@ -110,17 +105,35 @@ const Home = () => {
               <div>
                 <h1 style={{ fontSize: "3.5vw" }}> Hello，關於我</h1>
                 <Space>
-                <Button  key="/work" type="primary" shape="circle"　style={{ backgroundColor:"#3a4842"}} size="large" onClick={onClick}>
-                  履歷
-                </Button>
-                <Button  key="/work" type="primary" shape="circle" style={{ backgroundColor:"#3a4842"}} size="large" onClick={onClick}>
-                  作品
-                </Button>
-                <Button type="primary" shape="circle" style={{ backgroundColor:"#3a4842"}} size="large">
-                  Github
-                </Button>
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    style={{ backgroundColor: "#3a4842" }}
+                    size="large"
+                    onClick={() => onClick("/work")}
+                  >
+                    履歷
+                  </Button>
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    style={{ backgroundColor: "#3a4842" }}
+                    size="large"
+                    onClick={() => onClick("/resume")}
+                  >
+                    作品
+                  </Button>
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    style={{ backgroundColor: "#3a4842" }}
+                    size="large"
+                    justify="center"
+                    href="https://www.google.com" 
+                  >
+                Github
+                  </Button>
                 </Space>
-                
                 <br />
                 以下為個人優勢：
                 <br />
@@ -138,7 +151,7 @@ const Home = () => {
           </Row>
         </div>
       </Content>
-      <MyFooter/>
+      <MyFooter />
     </div>
   );
 };
