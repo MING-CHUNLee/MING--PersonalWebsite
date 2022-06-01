@@ -2,6 +2,7 @@ import { Avatar, Button, Comment, Form, Input, List, Row, Col,Modal  } from "ant
 import { useState, useEffect } from "react";
 import Bar from "../components/HeaderBar";
 import { Layout } from "antd";
+import { Pagination } from 'antd';
 import axios from "../../Axios.config";
 import CollectionCreateForm from '../components/CollectionCreateForm'
 import { DownloadOutlined } from "@ant-design/icons";
@@ -9,8 +10,6 @@ const { Header, Footer, Sider, Content } = Layout;
 
 const App = () => {
   const [comment, setComment] = useState([]);
-  const [submitting, setSubmitting] = useState(false);
-  const [value, setValue] = useState('');
   const [edit, setEdit] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -54,8 +53,6 @@ const App = () => {
     return () => clearInterval(timer);
   }, []);
   const onFinish = (values) => {
-    setSubmitting(false);
-
     let Show;
     if(localStorage.getItem("username")==="匿名"){
       Show="false";
@@ -63,7 +60,7 @@ const App = () => {
       Show=1;
     }
     var udata = JSON.stringify({
-      context: value.context,
+      context: values.context,
       isShow: Show,
       id:localStorage.getItem("id")
     });
@@ -81,7 +78,6 @@ const App = () => {
       .then(function (response) {
         console.log(JSON.stringify(response.data));
         getComment();
-        setValue('');
       })
       .catch(function (error) {
         console.log(error);
@@ -135,22 +131,22 @@ const Delete=(id)=>{
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  };
-  const Editor = ({ onChange, onSubmit, submitting, value }) => (
-    <>
-     <Form
+  return (
+    <div>
+      <Bar />
+      <Content>
+        <div className="resume">
+          <Form
             name="basic"
-            wrapperCol={{ span:22 }}
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 16 }}
             initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
           >
-            <Row>
-              <Col span={22}>
-              <Form.Item
+            <Form.Item
+              label="context"
               name="context"
               rules={[
                 { required: true, message: "Please input your username!" },
@@ -159,48 +155,13 @@ const Delete=(id)=>{
               <Input.TextArea />
             </Form.Item>
 
-              </Col>
-              <Col>
-              <Form.Item>
+            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit">
                 Submit
               </Button>
             </Form.Item>
-              </Col>
-            </Row>
-        
-           
           </Form>
-  </>
-  );
-
-
-
-  return (
-    <div>
-      <Bar />
-      <Content>
-        <div className="resume">
-        
-         
-      <Comment
-        avatar={   <Avatar
-          style={{
-            color: '#f56a00',
-            backgroundColor: '#fde3cf',
-          }}
-        >
-       { localStorage.getItem("username")}
-        </Avatar>}
-        content={
-          <Editor
-            onChange={handleChange}
-            onSubmit={onFinish}
-            value={value}
-          />  }
-          />
-            
-           <List 
+          <List 
             className="comment-list"
             header={`${comment.length} replies`}
             itemLayout="horizontal"
@@ -213,14 +174,7 @@ const Delete=(id)=>{
                     <Comment
                        key={item.id}
                       author={item.USER.username}
-                      avatar={ <Avatar
-                        style={{
-                          color: '#f56a00',
-                          backgroundColor: '#fde3cf',
-                        }}
-                      >
-                     { item.USER.username}
-                      </Avatar>}
+                      avatar={"https://joeschmoe.io/api/v1/random"}
                       content={item.context}
                       datetime={item.updatedAt}
                     />
@@ -256,6 +210,7 @@ const Delete=(id)=>{
           onCancel={onCancel}
           data={edit}
         />
+         <Pagination defaultCurrent={1} total={50} />;
     </div>
     
   );
