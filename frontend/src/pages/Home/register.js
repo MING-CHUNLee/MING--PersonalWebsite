@@ -39,7 +39,7 @@ const App = () => {
   };
   const onClick = (e) => {
     console.log("A");
-    navigate("/login", { replace: true });
+    navigate("/", { replace: true });
   };
   return (
     <div className="container">

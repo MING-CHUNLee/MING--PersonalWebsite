@@ -6,8 +6,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family:"Madefor","Helvetica", "Arial","LiHei Pro","黑體-繁","微軟正黑體", sans-serif;
 }
+
+

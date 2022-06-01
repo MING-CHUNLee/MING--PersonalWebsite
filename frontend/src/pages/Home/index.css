@@ -1,15 +1,14 @@
-body{
-    /* display: flex; */
-    justify-content: center;
-    font-size: 15px;
-    line-height: 28px;
-    letter-spacing: 1px;
-    font-family: "微軟正黑體",sans-serif;
-  }
 
-h2{
+
+/* h2{
   color: #647b71;
   margin:0,2vw;
+} */
+
+.ant-btn-circle.ant-btn-lg {
+  min-height: 8vw ;
+  min-width: 8vw !important; 
+  border-radius: 10% !important;
 }
 .h2BG{
   background-color: #dfe9e4;
@@ -17,20 +16,16 @@ h2{
 }
 .resume{
     /* display: flex; */
-    max-width: 80vw;
-    border: solid 3px rgb(36, 18, 18);
+    max-width: 100%;
+    height: 90%;
     position: relative;
     margin: auto;
+    background-color: #647b71;
+    color: #fff;
   }
-.basic{
-  background-color: #647b71;
-  color: #fff;
-  padding: 5vw;
-}
+
 .myface{
   position: relative;
-  height: 65%;
-  width: 60%;
 }
 
 .info{
@@ -49,12 +44,15 @@ img{
 }
 .circular--portrait{
   position:relative;
-  width:13vw;
-  height:13vw;
+  width:15vw;
+  height:15vw;
   overflow:hidden;
   border-radius:50%;
 }
-
+.ant-menu {
+  color: white !important;
+  background-color: #647b71 !important;
+}
 .circular--portrait img{
   width:100%;
   height:auto;
