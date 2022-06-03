@@ -1,12 +1,68 @@
 
 const db = require("../models/index.js");
+const { Op } = require("sequelize");
 
 const getAllComment = async () => {
-  const comments = await db["COMMENTS"].findAll({
+  let comments = await db["COMMENTS"].findAll({
     include: [
       { model: db["USERS"], attributes: ["username"]}
    ],
-    attributes: ["id","context", "announcer"],
+   order: [
+    ['updatedAt', 'DESC'],
+],
+    attributes: ["id","context", "announcer","updatedAt","isShow"],
+  });
+
+  comments = comments.map((comment) => {
+    return comment.dataValues;
+  });
+
+  comments.forEach((comment) => {
+    const now = new Date();
+    if (now - comment.updatedAt <= 1000 * 60) {
+      comment.updatedAt = "剛剛";
+    } else {
+      comment.updatedAt = comment.updatedAt.toLocaleString("en-US");
+    }
+    if(!comment.isShow){
+      comment.USER.username="匿名";
+    }
+  
+  });
+  return comments;
+};
+
+const searchComment = async (context) => {
+  let comments = await db["COMMENTS"].findAll({
+    include: [
+      { model: db["USERS"], attributes: ["username"]}
+   ],
+   where: {
+    context: {
+      [Op.substring]: context,
+    },
+  },
+   order: [
+    ['updatedAt', 'DESC'],
+],
+    attributes: ["id","context", "announcer","updatedAt","isShow"],
+  });
+
+  comments = comments.map((comment) => {
+    return comment.dataValues;
+  });
+
+  comments.forEach((comment) => {
+    const now = new Date();
+    if (now - comment.updatedAt <= 1000 * 60) {
+      comment.updatedAt = "剛剛";
+    } else {
+      comment.updatedAt = comment.updatedAt.toLocaleString("en-US");
+    }
+    if(!comment.isShow){
+      comment.USER.username="匿名";
+    }
+  
   });
   return comments;
 };
@@ -66,6 +122,7 @@ module.exports = {
     creatComment,
     editComment,
     delectComment,
-    checkAuthor
+    checkAuthor,
+    searchComment
  
 };
