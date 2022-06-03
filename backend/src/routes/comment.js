@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.use('/',memberAuth.verifyMemberToken)
 router.get('/',commentController.getAllComment)
+router.post('/search',commentController.SearchComment)
 router.post('/',commentController.createComment)
 router.use('/',memberAuth.isAuthor)
 router.patch('/',commentController.editComment)

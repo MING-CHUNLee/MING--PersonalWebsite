@@ -6,7 +6,31 @@ const getAllComment = async (req, res) => {
         const comment =await CommentService.getAllComment();
         return res.status(200).json({
           detail: "成功取得所有位置資訊",
-          a:comment ,
+          data:comment ,
+        });
+      
+    
+    } catch (error) {
+      return res.status(500).json(
+        {
+        detail: "伺服器內部錯誤"+error
+      });
+    }
+  };
+  const SearchComment = async (req, res) => {
+
+    if(!req.body?.search){
+      return res.status(400).json({
+        detail: "參數錯誤，請參考文件",
+      });
+    }
+    const { body }=req;       
+    const {search}=body;
+    try {
+        const comment =await CommentService.searchComment(search);
+        return res.status(200).json({
+          detail: "成功取得所有位置資訊",
+          data:comment ,
         });
       
     
@@ -19,6 +43,7 @@ const getAllComment = async (req, res) => {
   };
   
 
+
   const createComment = async (req, res) => {
 
     try {
@@ -27,18 +52,7 @@ const getAllComment = async (req, res) => {
               detail: "參數錯誤，請參考文件",
             });
           }
-          const { body }=req;
-          
-          // if(!req.body?.isShow){
-          //   body.announcer=process.env.VISTOR
-          // }else{
-          //   const { announcer }=body;
-          //   const existsUser=await UserService.checkUserExistOrNot(announcer);
-          //   if (!existsUser) {
-          //     body.announcer=process.env.VISTOR
-          //   }
-          // }
-        
+          const { body }=req;       
           const existsUser=await UserService.checkUserExistOrNot(body.id);
           if (!existsUser) {
             return res.status(400).json({
@@ -105,5 +119,5 @@ const getAllComment = async (req, res) => {
   };
 
 module.exports = {
-    getAllComment,createComment,editComment,delectComment
+    getAllComment,createComment,editComment,delectComment,SearchComment
   };
