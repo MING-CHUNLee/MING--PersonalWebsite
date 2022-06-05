@@ -9,10 +9,8 @@
 import React from "react";
 import { Menu } from "antd";
 import { useNavigate } from "react-router-dom";
-import { Layout, Button, Row, Col, Dropdown, Avatar } from "antd";
+import { Layout, Button, Row, Col, Dropdown, Avatar,Affix } from "antd";
 // import { useNavigate } from "react-router-dom";
-import { LogoutOutlined } from "@ant-design/icons";
-
 const { Header } = Layout;
 
 export const HeaderBar = () => {
@@ -41,19 +39,16 @@ export const HeaderBar = () => {
   );
 
   return (
-    <>
-    <Header className="black">
-      <Row   style={{
-        verticalAlign: 'flex-end',height:'100%'
-      }}>
-      <Col>
+    <> <Affix offsetTop={0}>
+<Header style={{backgroundColor: "#283044", border: "#283044" }}>
+      <Row  justify="center">
+      <Col span={15}>
       <h1 style={{color:"white"}}> 李明錞</h1>
         
       </Col>
       
         <Col
           span={2}
-          push={18}
           style={{
             verticalAlign: "middle",
             color: "white",
@@ -62,21 +57,25 @@ export const HeaderBar = () => {
           <Dropdown overlay={menu} trigger={["click"]} placement="bottomLeft">
             <div onClick={(e) => e.preventDefault()}>
               <Avatar size="large" >
-              dfdfdf
+             { localStorage.getItem("username")}
               </Avatar>
             </div>
           </Dropdown>
         </Col>
       </Row>
     </Header>
-    <Row style={{ backgroundColor:"#647b71"}} >
-    <Col style={{ backgroundColor:"#3a4842",border:"#647b71"}} >
-          <Menu mode="horizontal" defaultSelectedKeys={[""]} onClick={onClick}>
-            <Menu.Item key="/">Home</Menu.Item>
+    <Row justify="center" style={{backgroundColor: "#283044", border: "#283044" }} >
+    <Col span={4}style={{backgroundColor: "#283044", border: "#283044" }}>
+          <Menu mode="horizontal" defaultSelectedKeys={[""]} onClick={onClick}  style={{backgroundColor: "#283044", border: "#283044",color:"white" }}>
+            <Menu.Item key="/">首頁</Menu.Item>
+            <Menu.Item key="/resume">履歷</Menu.Item>
+            <Menu.Item key="/work">作品</Menu.Item>
             <Menu.Item key="/comment">留言板</Menu.Item>
           </Menu>
         </Col>
     </Row>
+  </Affix>
+    
     </>
   );
 };

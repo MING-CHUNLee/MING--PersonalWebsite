@@ -1,4 +1,5 @@
 @import '~antd/dist/antd.css';
+@import './pages/Home/index.css';
 @import './pages/Home/comment.css';
 @dark-color: #343a40;
 /* .App {

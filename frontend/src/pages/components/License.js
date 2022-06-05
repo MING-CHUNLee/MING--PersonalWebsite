@@ -15,12 +15,7 @@ const License =(prop)=>{
     console.log(typeof prop.license.url2);
     return (
                 <div>
-                    <Card
-                    style={{ width: 400}}
-                    cover={<img alt={prop.license.name} src={prop.license.url} />}
-                    >
-                    <Meta title={prop.license.name} description={prop.license.issueDate} />
-                    </Card>
+                 
                 </div>
             )
 }
