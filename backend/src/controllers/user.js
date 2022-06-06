@@ -2,7 +2,7 @@
  * @Author: 20181101remon mindy80230@gmail.com
  * @Date: 2022-05-16 14:31:04
  * @LastEditors: 20181101remon mindy80230@gmail.com
- * @LastEditTime: 2022-05-18 17:02:16
+ * @LastEditTime: 2022-06-06 16:25:09
  * @FilePath: \backend\src\controller\user.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -121,8 +121,38 @@ const userLogin= async (req, res) => {
   }
 
 }
+
+const touristsLogin= async (req, res) => {
+  try {
+
+    username= Date.now()
+    const userSingUpState = await UserService.creatTourist (username);
+    const getInfo= await UserService.getTouristInfo (username);
+
+    var payload = {
+      id: getInfo.id,
+      expire: Date.now() + 1000 * 60 * 60, //7 days
+    };
+    var token = jwt.sign(payload,process.env.JWT_SECRET);
+
+ 
+
+    return res.status(200).json({
+      detail: "登入成功",
+      token:token,
+      getInfo:getInfo,
+    });
+  }
+  catch(error){
+    return res.status(500).json({
+      detail: "伺服器內部錯誤",
+    });
+  }
+
+}
 module.exports = {
   getAllUserInfo,
   userRegistration,
-  userLogin
+  userLogin,
+  touristsLogin
 };
