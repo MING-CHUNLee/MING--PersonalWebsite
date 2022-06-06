@@ -50,6 +50,29 @@ const App = () => {
     console.log("A")
     navigate('/register', { replace: true });
   }
+
+  const onClickT=(e)=>{
+    var config = {
+      method: 'get',
+      url: '/api/tourists',
+    };
+    
+    axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+      localStorage.setItem("authorized_keys", response.data.token);
+      localStorage.setItem("id", response.data.getInfo.id);
+      localStorage.setItem("username", "遊客");
+  
+      navigate("/",{replace:true});
+      window.location.reload();
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+   
+  }
+
   return (
     <div >
     <div className='container'>
@@ -113,6 +136,9 @@ const App = () => {
       </Form.Item>
     </Form>
     </div>
+    <Button ghost type="primary"  onClick={onClickT} shape="round">
+         遊客登入
+        </Button>
     </div>
   );
 };
