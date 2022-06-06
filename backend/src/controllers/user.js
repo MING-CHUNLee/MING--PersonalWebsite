@@ -124,14 +124,8 @@ const userLogin= async (req, res) => {
 
 const touristsLogin= async (req, res) => {
   try {
-    if(!req.body?.username){
-      return res.status(400).json({
-        detail: "參數錯誤，請參考文件",
-      });
-    }
-    const { body } = req;
-    let { username } = body;
-    username= username+Date.now()
+
+    username= Date.now()
     const userSingUpState = await UserService.creatTourist (username);
     const getInfo= await UserService.getTouristInfo (username);
 
