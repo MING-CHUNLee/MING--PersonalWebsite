@@ -37,9 +37,7 @@ const App = () => {
   };
 
   const getComment = () => {
-    // axios.get(`/api/comment`).then((res) => {
-    //   setComment(res.data.a);
-    // });
+ 
     var config = {
       method: "get",
       url: "/api/comment",
@@ -63,7 +61,7 @@ const App = () => {
     getComment();
     let timer = setInterval(() => {
       getComment();
-    }, 5000);
+    }, 50000);
     return () => clearInterval(timer);
   }, []);
   const onFinish = (values) => {
@@ -144,8 +142,46 @@ const App = () => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-  const handleChange = (e) => {
-    setValue(e.target.value);
+  const handleChange = (value) => {
+    if(value=="user"){
+      var config = {
+        method: 'post',
+        url: '/api/comment/userComment',
+        headers: { 
+          authorization: `Bearer ` + localStorage.getItem("authorized_keys"),
+        },
+    
+      };
+      
+      axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        setComment(response.data.data)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      
+    }else if(value=="tourist"){
+
+      var config = {
+        method: 'get',
+        url: '/api/comment/touristComment',
+        headers: { 
+          authorization: `Bearer ` + localStorage.getItem("authorized_keys"),
+        },
+
+      };
+      
+      axios(config)
+      .then(function (response) {
+        setComment(response.data.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      
+    }
   };
 
   const onSearch = (value) => {
@@ -189,14 +225,15 @@ const App = () => {
                   }}
                 />
                   <Select
-      defaultValue="lucy"
+      defaultValue="user"
       style={{
         width: 120,
       }}
       onChange={handleChange}
     >
+      <Option value="all">所有留言</Option>
       <Option value="user">使用者留言</Option>
-      <Option value="lucy">遊客留言</Option>
+      <Option value="tourist">遊客留言</Option>
     </Select>
               </div>
               
