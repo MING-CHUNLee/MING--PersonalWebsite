@@ -7,7 +7,9 @@ import {
   List,
   Row,
   Col,
-  Modal,Affix,Select 
+  Modal,
+  Affix,
+  Select,
 } from "antd";
 import { useState, useEffect } from "react";
 import Bar from "../components/HeaderBar";
@@ -37,7 +39,6 @@ const App = () => {
   };
 
   const getComment = () => {
- 
     var config = {
       method: "get",
       url: "/api/comment",
@@ -143,59 +144,56 @@ const App = () => {
     console.log("Failed:", errorInfo);
   };
   const handleChange = (value) => {
-    if(value=="user"){
+    if (value == "user") {
       var config = {
-        method: 'post',
-        url: '/api/comment/userComment',
-        headers: { 
+        method: "get",
+        url: "/api/comment/userComment",
+        headers: {
           authorization: `Bearer ` + localStorage.getItem("authorized_keys"),
         },
-    
       };
-      
-      axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-        setComment(response.data.data)
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-      
-    }else if(value=="tourist"){
 
+      axios(config)
+        .then(function (response) {
+          console.log(response)
+          setComment(response.data.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+        
+    } else if (value == "tourist") {
       var config = {
-        method: 'get',
-        url: '/api/comment/touristComment',
-        headers: { 
+        method: "get",
+        url: "/api/comment/touristComment",
+        headers: {
           authorization: `Bearer ` + localStorage.getItem("authorized_keys"),
         },
-
       };
-      
+
       axios(config)
-      .then(function (response) {
-        setComment(response.data.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-      
+        .then(function (response) {
+          setComment(response.data.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
   };
 
   const onSearch = (value) => {
     console.log(value);
     var udata = JSON.stringify({
-      "search": value
+      search: value,
     });
     var config = {
-      method: 'post',
+      method: "post",
       url: "/api/comment/search",
       headers: {
         authorization: `Bearer ` + localStorage.getItem("authorized_keys"),
       },
-      data : udata
+      data: udata,
     };
 
     axios(config)
@@ -215,30 +213,31 @@ const App = () => {
         <div className="resume">
           <Row>
             <Col span={6}>
-            <Affix offsetTop={120} onChange={(affixed) => console.log(affixed)}>
-            <div style={{ margin: "1vw" }}>
-                <Search
-                  placeholder="輸入內容"
-                  onSearch={onSearch}
-                  style={{
-                    width: 200,
-                  }}
-                />
+              <Affix
+                offsetTop={120}
+                onChange={(affixed) => console.log(affixed)}
+              >
+                <div style={{ margin: "1vw" }}>
+                  <Search
+                    placeholder="輸入內容"
+                    onSearch={onSearch}
+                    style={{
+                      width: 200,
+                    }}
+                  />
                   <Select
-      defaultValue="user"
-      style={{
-        width: 120,
-      }}
-      onChange={handleChange}
-    >
-      <Option value="all">所有留言</Option>
-      <Option value="user">使用者留言</Option>
-      <Option value="tourist">遊客留言</Option>
-    </Select>
-              </div>
-              
-  </Affix>
-
+                    defaultValue="all"
+                    style={{
+                      width: 120,
+                    }}
+                    onChange={handleChange}
+                  >
+                    <Option value="all">所有留言</Option>
+                    <Option value="user">使用者留言</Option>
+                    <Option value="tourist">遊客留言</Option>
+                  </Select>
+                </div>
+              </Affix>
             </Col>
             <Col span={18}>
               <Comment

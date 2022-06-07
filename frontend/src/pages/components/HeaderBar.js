@@ -27,7 +27,7 @@ export const HeaderBar = () => {
       localStorage.removeItem("id");
       window.location.reload();
     }else if(e.key==="profile"){
-
+      navigate(e.key, { replace: true });
     }
 
   };

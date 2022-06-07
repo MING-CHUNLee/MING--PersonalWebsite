@@ -5,7 +5,7 @@ import Login from "./pages/Home/login";
 import Comment from "./pages/Home/comments";
 import Work from "./pages/Home/work";
 import Resume from "./pages/Home/resume";
-
+import Profile from "./pages/Home/profile"
 import {
   BrowserRouter as Router,
   Routes,
@@ -25,6 +25,7 @@ const App = () => {
           <Route path="/comment" element={<Comment />} />
           <Route path="/resume" element={<Resume />}/>
           <Route path="/work" element={<Work/>} />
+          <Route path="/profile" element={<Profile/>} />
         </Routes>
       ) : (
         // <Route path="*" element={<Button>sddsd</Button>} />
