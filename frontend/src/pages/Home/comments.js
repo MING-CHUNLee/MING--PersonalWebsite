@@ -7,7 +7,7 @@ import {
   List,
   Row,
   Col,
-  Modal,Affix
+  Modal,Affix,Select 
 } from "antd";
 import { useState, useEffect } from "react";
 import Bar from "../components/HeaderBar";
@@ -17,6 +17,8 @@ import CollectionCreateForm from "../components/CollectionCreateForm";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 const { Header, Footer, Sider, Content } = Layout;
 const { Search } = Input;
+const { Option } = Select;
+
 const App = () => {
   const [comment, setComment] = useState([]);
   const [submitting, setSubmitting] = useState(false);
@@ -186,9 +188,20 @@ const App = () => {
                     width: 200,
                   }}
                 />
+                  <Select
+      defaultValue="lucy"
+      style={{
+        width: 120,
+      }}
+      onChange={handleChange}
+    >
+      <Option value="user">使用者留言</Option>
+      <Option value="lucy">遊客留言</Option>
+    </Select>
               </div>
+              
   </Affix>
-             
+
             </Col>
             <Col span={18}>
               <Comment
