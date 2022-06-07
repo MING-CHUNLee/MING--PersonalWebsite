@@ -1,4 +1,4 @@
-import { Button, Checkbox, Form, Input,Switch } from 'antd';
+import { Button, Checkbox, Form, Input,Switch,Divider } from 'antd';
 import "./login.css";
 import axios from "../../Axios.config";
 import { useNavigate } from "react-router-dom";
@@ -123,7 +123,6 @@ const App = () => {
       <Form.Item name="isShow" label="匿名" valuePropName="checked">
         <Switch size="small"/>
       </Form.Item>
-
       <Form.Item
         wrapperCol={{
           offset: 8,
@@ -134,11 +133,23 @@ const App = () => {
           LOG IN
         </Button>
       </Form.Item>
-    </Form>
-    </div>
-    <Button ghost type="primary"  onClick={onClickT} shape="round">
+      <Divider>快速登入</Divider>
+      <Form.Item
+        wrapperCol={{
+          offset: 8,
+          span: 16,
+        }}
+      >
+        
+      <Button ghost type="primary"  onClick={onClickT} shape="round">
          遊客登入
         </Button>
+      </Form.Item>
+   
+      
+    </Form>
+    </div>
+  
     </div>
   );
 };

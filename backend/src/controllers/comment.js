@@ -17,6 +17,42 @@ const getAllComment = async (req, res) => {
       });
     }
   };
+
+  const getTouristComment = async (req, res) => {
+
+    try {
+        const comment =await CommentService.getTouristComment();
+        return res.status(200).json({
+          detail: "成功取得所有位置資訊",
+          data:comment ,
+        });
+      
+    
+    } catch (error) {
+      return res.status(500).json(
+        {
+        detail: "伺服器內部錯誤"+error
+      });
+    }
+  };
+
+  const getUserComment = async (req, res) => {
+
+    try {
+        const comment =await CommentService.searchALLUserComment();
+        return res.status(200).json({
+          detail: "成功取得所有位置資訊",
+          data:comment ,
+        });
+      
+    
+    } catch (error) {
+      return res.status(500).json(
+        {
+        detail: "伺服器內部錯誤"+error
+      });
+    }
+  };
   const SearchComment = async (req, res) => {
 
     if(!req.body?.search){
@@ -119,5 +155,5 @@ const getAllComment = async (req, res) => {
   };
 
 module.exports = {
-    getAllComment,createComment,editComment,delectComment,SearchComment
+    getAllComment,createComment,editComment,delectComment,SearchComment,getTouristComment,getUserComment
   };
