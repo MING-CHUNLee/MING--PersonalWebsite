@@ -23,6 +23,7 @@ const getAllUserProfile = async (req, res) => {
     const { id } = body;
     const users =await UserService.getAllUserProfile(id);
     const comments =await CommentService.searchALLUserComment(id);
+    
     return res.status(200).json({
       detail: "成功取得使用者",
       info: users,

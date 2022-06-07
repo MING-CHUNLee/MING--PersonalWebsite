@@ -93,44 +93,7 @@ const getUserAllComment = async () => {
   return comments;
 };
 
-const searchALLUserComment = async () => {
-  let comments = await db["COMMENTS"].findAll({
-    include: [
-      {
-        model: db["USERS"],
-        where: [
-          {
-            mail: {
-              [Op.ne]: null,
-            },
-          },
-        ],
-        attributes: ["username"],
-      },
-    ],
-    order: [["updatedAt", "DESC"]],
-    attributes: ["id", "context", "announcer", "updatedAt", "isShow"],
-  });
-
-  comments = comments.map((comment) => {
-    return comment.dataValues;
-  });
-
-  comments.forEach((comment) => {
-    const now = new Date();
-    if (now - comment.updatedAt <= 1000 * 60) {
-      comment.updatedAt = "剛剛";
-    } else {
-      comment.updatedAt = comment.updatedAt.toLocaleString("en-US");
-    }
-    if (!comment.isShow) {
-      comment.USER.username = "匿名";
-    }
-  });
-  return comments;
-};
-
-const getTouristComment = async (id) => {
+const searchALLUserComment = async (id) => {
   let comments = await db["COMMENTS"].findAll({
     include: [
       {
@@ -157,6 +120,43 @@ const getTouristComment = async (id) => {
       comment.updatedAt = "剛剛";
     } else {
       comment.updatedAt = comment.updatedAt.toLocaleString("en-US");
+    }
+  });
+  return comments;
+};
+
+const getTouristComment = async () => {
+  let comments = await db["COMMENTS"].findAll({
+    include: [
+      {
+        model: db["USERS"],
+        where: [
+          {
+            mail: {
+              [Op.eq]: null,
+            },
+          },
+        ],
+        attributes: ["username"],
+      },
+    ],
+    order: [["updatedAt", "DESC"]],
+    attributes: ["id", "context", "announcer", "updatedAt", "isShow"],
+  });
+
+  comments = comments.map((comment) => {
+    return comment.dataValues;
+  });
+
+  comments.forEach((comment) => {
+    const now = new Date();
+    if (now - comment.updatedAt <= 1000 * 60) {
+      comment.updatedAt = "剛剛";
+    } else {
+      comment.updatedAt = comment.updatedAt.toLocaleString("en-US");
+    }
+    if (!comment.isShow) {
+      comment.USER.username = "匿名";
     }
   });
   return comments;
