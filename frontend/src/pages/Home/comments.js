@@ -7,8 +7,11 @@ import {
   List,
   Row,
   Col,
-  Modal,Affix
+  Modal,
+  Affix,
+  Select,
 } from "antd";
+
 import { useState, useEffect } from "react";
 import Bar from "../components/HeaderBar";
 import { Layout } from "antd";
@@ -17,6 +20,7 @@ import CollectionCreateForm from "../components/CollectionCreateForm";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 const { Header, Footer, Sider, Content } = Layout;
 const { Search } = Input;
+const { Option } = Select;
 const App = () => {
   const [comment, setComment] = useState([]);
   const [submitting, setSubmitting] = useState(false);
@@ -35,9 +39,6 @@ const App = () => {
   };
 
   const getComment = () => {
-    // axios.get(`/api/comment`).then((res) => {
-    //   setComment(res.data.a);
-    // });
     var config = {
       method: "get",
       url: "/api/comment",
@@ -61,7 +62,7 @@ const App = () => {
     getComment();
     let timer = setInterval(() => {
       getComment();
-    }, 5000);
+    }, 50000);
     return () => clearInterval(timer);
   }, []);
   const onFinish = (values) => {
@@ -142,22 +143,54 @@ const App = () => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-  const handleChange = (e) => {
-    setValue(e.target.value);
+  const handleChange = (value) => {
+    if (value === "user") {
+      var config = {
+        method: "get",
+        url: "/api/comment/userComment",
+        headers: {
+          authorization: `Bearer ` + localStorage.getItem("authorized_keys"),
+        },
+      };
+      axios(config)
+        .then(function (response) {
+          setComment(response.data.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+    } else {
+      console.log(`selected ${value}`);
+      var config = {
+        method: "get",
+        url: "/api/comment/touristComment",
+        headers: {
+          authorization: `Bearer ` + localStorage.getItem("authorized_keys"),
+        },
+      };
+      axios(config)
+        .then(function (response) {
+          setComment(response.data.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
   };
 
   const onSearch = (value) => {
     console.log(value);
     var udata = JSON.stringify({
-      "search": value
+      search: value,
     });
     var config = {
-      method: 'post',
+      method: "post",
       url: "/api/comment/search",
       headers: {
         authorization: `Bearer ` + localStorage.getItem("authorized_keys"),
       },
-      data : udata
+      data: udata,
     };
 
     axios(config)
@@ -177,18 +210,30 @@ const App = () => {
         <div className="resume">
           <Row>
             <Col span={6}>
-            <Affix offsetTop={120} onChange={(affixed) => console.log(affixed)}>
-            <div style={{ margin: "1vw" }}>
-                <Search
-                  placeholder="輸入內容"
-                  onSearch={onSearch}
-                  style={{
-                    width: 200,
-                  }}
-                />
-              </div>
-  </Affix>
-             
+              <Affix
+                offsetTop={120}
+                onChange={(affixed) => console.log(affixed)}
+              >
+                <div style={{ margin: "1vw" }}>
+                  <Search
+                    placeholder="輸入內容"
+                    onSearch={onSearch}
+                    style={{
+                      width: 200,
+                    }}
+                  />
+                  <Select
+                    defaultValue="lucy"
+                    style={{
+                      width: 120,
+                    }}
+                    onChange={handleChange}
+                  >
+                    <Option value="user">使用者留言</Option>
+                    <Option value="tourist">遊客留言</Option>
+                  </Select>
+                </div>
+              </Affix>
             </Col>
             <Col span={18}>
               <Comment

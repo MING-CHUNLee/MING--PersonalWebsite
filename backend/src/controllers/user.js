@@ -2,15 +2,16 @@
  * @Author: 20181101remon mindy80230@gmail.com
  * @Date: 2022-05-16 14:31:04
  * @LastEditors: 20181101remon mindy80230@gmail.com
- * @LastEditTime: 2022-06-06 16:25:09
+ * @LastEditTime: 2022-06-07 15:36:30
  * @FilePath: \backend\src\controller\user.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 
-const { UserService } = require("../services/index.js");
-const getAllUserInfo = async (req, res) => {
+const { CommentService,UserService } = require("../services/index.js");
+
+const getAllUserProfile = async (req, res) => {
   try {
  
     if(!req.body?.id){
@@ -20,10 +21,12 @@ const getAllUserInfo = async (req, res) => {
     }
     const { body } = req;
     const { id } = body;
-    const users =await UserService.getAllUserInfo(id);
+    const users =await UserService.getAllUserProfile(id);
+    const comments =await CommentService.searchALLUserComment(id);
     return res.status(200).json({
       detail: "成功取得使用者",
-      users: [...users.values()],
+      info: users,
+      comment:comments
     });
   
   } catch (error) {
@@ -34,6 +37,8 @@ const getAllUserInfo = async (req, res) => {
     });
   }
 };
+
+
 
 const userRegistration = async (req, res) => {
 
@@ -151,7 +156,7 @@ const touristsLogin= async (req, res) => {
 
 }
 module.exports = {
-  getAllUserInfo,
+  getAllUserProfile,
   userRegistration,
   userLogin,
   touristsLogin
