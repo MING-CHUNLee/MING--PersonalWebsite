@@ -200,7 +200,7 @@ const editComment = async (a) => {
 const delectComment = async (a) => {
   await db["COMMENTS"].destroy({
     where: {
-      id: a.id,
+      id: a,
     },
   });
 };
