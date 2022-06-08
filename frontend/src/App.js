@@ -28,11 +28,13 @@ const App = () => {
           <Route path="/profile" element={<Profile/>} />
         </Routes>
       ) : (
-        // <Route path="*" element={<Button>sddsd</Button>} />
         <Routes>
-           <Route path="*" element={<Login/>} />
-        <Route path="/login" index element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="*" element={<Index />} />
+          <Route path="/comment" element={<Comment />} />
+          <Route path="/resume" element={<Resume />}/>
+          <Route path="/work" element={<Work/>} />
+          <Route path="/login" index element={<Login />} />
+          <Route path="/register" element={<Register />} />
       </Routes>
       )}
     

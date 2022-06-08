@@ -27,7 +27,7 @@ const App = () => {
   const [value, setValue] = useState("");
   const [edit, setEdit] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const user = localStorage.getItem("authorized_keys");
   const showModal = (context) => {
     setEdit(context);
     console.log(context);
@@ -271,7 +271,10 @@ const App = () => {
                             },
                           ]}
                         >
+                           {user ? 
                           <Input.TextArea />
+                            : <Input.TextArea disabled />}
+                        
                         </Form.Item>
                       </Col>
                       <Col>

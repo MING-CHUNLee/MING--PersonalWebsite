@@ -9,10 +9,10 @@
 import React from "react";
 import { Menu } from "antd";
 import { useNavigate } from "react-router-dom";
-import { Layout, Button, Row, Col, Dropdown, Avatar,Affix } from "antd";
+import { Layout, Button, Row, Col, Dropdown, Avatar, Affix } from "antd";
 // import { useNavigate } from "react-router-dom";
 const { Header } = Layout;
-
+const user = localStorage.getItem("authorized_keys");
 export const HeaderBar = () => {
   const navigate = useNavigate();
   const onClick = (e) => {
@@ -22,60 +22,85 @@ export const HeaderBar = () => {
 
   const User = (e) => {
     console.log("click ", e);
-    if(e.key==="logout"){
+    if (e.key === "logout") {
       localStorage.removeItem("authorized_keys");
       localStorage.removeItem("id");
+      localStorage.setItem("username", "我誰");
       window.location.reload();
-    }else if(e.key==="profile"){
-      navigate(e.key, { replace: true });
+    } else if (e.key === "profile") {
+      navigate("/" + e.key, { replace: true });
+    }else if (e.key === "login") {
+      navigate("/" + e.key, { replace: true });
     }
-
   };
   const menu = (
-    <Menu mode="horizontal" defaultSelectedKeys={[""]}  onClick={User}>
-      <Menu.Item key="logout">登出</Menu.Item>
+    <Menu mode="horizontal" defaultSelectedKeys={[""]} onClick={User}>
+      {user ? (
+        <Menu.Item key="logout">登出</Menu.Item>
+      ) : (
+        <Menu.Item key="login">登入</Menu.Item>
+      )}
       <Menu.Item key="profile">檔案</Menu.Item>
     </Menu>
   );
 
   return (
-    <> <Affix offsetTop={0}>
-<Header style={{backgroundColor: "#283044", border: "#283044" }}>
-      <Row  justify="center">
-      <Col span={15}>
-      <h1 style={{color:"white"}}> 李明錞</h1>
-        
-      </Col>
-      
-        <Col
-          span={2}
-          style={{
-            verticalAlign: "middle",
-            color: "white",
-          }}
+    <>
+      {" "}
+      <Affix offsetTop={0}>
+        <Header style={{ backgroundColor: "#283044", border: "#283044" }}>
+          <Row justify="center">
+            <Col span={15}>
+              <h1 style={{ color: "white" }}> 李明錞</h1>
+            </Col>
+
+            <Col
+              span={2}
+              style={{
+                verticalAlign: "middle",
+                color: "white",
+              }}
+            >
+              <Dropdown
+                overlay={menu}
+                trigger={["click"]}
+                placement="bottomLeft"
+              >
+                <div onClick={(e) => e.preventDefault()}>
+                  <Avatar size="large">
+                    {localStorage.getItem("username")}
+                  </Avatar>
+                </div>
+              </Dropdown>
+            </Col>
+          </Row>
+        </Header>
+        <Row
+          justify="center"
+          style={{ backgroundColor: "#283044", border: "#283044" }}
         >
-          <Dropdown overlay={menu} trigger={["click"]} placement="bottomLeft">
-            <div onClick={(e) => e.preventDefault()}>
-              <Avatar size="large" >
-             { localStorage.getItem("username")}
-              </Avatar>
-            </div>
-          </Dropdown>
-        </Col>
-      </Row>
-    </Header>
-    <Row justify="center" style={{backgroundColor: "#283044", border: "#283044" }} >
-    <Col span={4}style={{backgroundColor: "#283044", border: "#283044" }}>
-          <Menu mode="horizontal" defaultSelectedKeys={[""]} onClick={onClick}  style={{backgroundColor: "#283044", border: "#283044",color:"white" }}>
-            <Menu.Item key="/">首頁</Menu.Item>
-            <Menu.Item key="/resume">履歷</Menu.Item>
-            <Menu.Item key="/work">作品</Menu.Item>
-            <Menu.Item key="/comment">留言板</Menu.Item>
-          </Menu>
-        </Col>
-    </Row>
-  </Affix>
-    
+          <Col
+            span={4}
+            style={{ backgroundColor: "#283044", border: "#283044" }}
+          >
+            <Menu
+              mode="horizontal"
+              defaultSelectedKeys={[""]}
+              onClick={onClick}
+              style={{
+                backgroundColor: "#283044",
+                border: "#283044",
+                color: "white",
+              }}
+            >
+              <Menu.Item key="/">首頁</Menu.Item>
+              <Menu.Item key="/resume">履歷</Menu.Item>
+              <Menu.Item key="/work">作品</Menu.Item>
+              <Menu.Item key="/comment">留言板</Menu.Item>
+            </Menu>
+          </Col>
+        </Row>
+      </Affix>
     </>
   );
 };
