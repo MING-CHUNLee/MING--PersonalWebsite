@@ -18,6 +18,15 @@
   margin: 3vw;
   
 }
+
+.profilecontainer{
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  margin: 1vw 20vw ;
+  
+}
+
 .myface{
   position: relative;
 }

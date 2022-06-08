@@ -21,6 +21,9 @@ import {
   Card,
   Form,
   Divider,
+  Comment,
+  Avatar,
+  List,
 } from "antd";
 import { Tag } from "antd";
 import React, { useEffect, useState } from "react";
@@ -44,23 +47,21 @@ const App = () => {
     console.log(e);
     navigate(e, { replace: true });
   };
-  const [info,setInfo]=useState();
-
+  const [infomation,setInfomation]=useState([]);
+  const [comment, setComment] = useState([]);
   const getComment = () => {
 
-    var data = JSON.stringify({
-        "id": "64e4e446-5075-4837-ab79-a59c89654afc"
-      });
-      
+
       var config = {
         method: 'get',
-        url: '/api/user',
-        data : data
+        url: '/api/user/64e4e446-5075-4837-ab79-a59c89654afc',
+    
       };
       
       axios(config)
       .then(function (response) {
-        console.log(JSON.stringify(response.data));
+        setInfomation(response.data.info);
+        setComment(response.data.comment)
       })
       .catch(function (error) {
         console.log(error);
@@ -73,7 +74,7 @@ const App = () => {
     getComment();
     let timer = setInterval(() => {
       getComment();
-    }, 50000);
+    }, 10000);
     return () => clearInterval(timer);
   }, []);
 
@@ -88,70 +89,69 @@ const App = () => {
       <Bar />
       <Content>
         <div justify="center" align="middle">
-          <h1>Project</h1>
+          <h1>個人資料</h1>
         </div>
-        <div className="indexcontainer">
+        <div className="profilecontainer">
           <Row
             style={{
               backgroundColor: "rgba(255,255,255,0.90)",
               padding: "2vw",
             }}
+            justify="center" align="middle"
           >
             <Col
               xs={{ span: 24 }}
               md={{ span: 16 }}
-              lg={{ span: 12 }}
-              xl={{ span: 12 }}
+              lg={{ span: 24}}
+              xl={{ span: 24}}
+              justify="center" align="middle"
             >
-              <Row justify="center" align="middle">
-                <Col style={{ textAlign: "center" }}>
-                  <div>
-                    <img
-                      src={myface}
-                      alt="myface"
-                      style={{ width: "30vw", height: "100%" }}
-                    />
-                  </div>
-                </Col>
-              </Row>
+              名稱：  { infomation.username}
+              信箱：{ infomation.mail}
             </Col>
 
             <Col
               xs={{ span: 24 }}
-              md={{ span: 8 }}
-              lg={{ span: 12 }}
-              xl={{ span: 12 }}
+              md={{ span: 16 }}
+              lg={{ span: 24}}
+              xl={{ span: 24}}
+              justify="center" 
             >
               <div>
-                <h1>
-                  <a href="https://github.com/monosparta/time-house-sensor">
-                    <GithubOutlined />
-                    時光屋座位管理系統{" "}
-                  </a>
-                </h1>
-
-                <p>
-                  此服務為空間座位管理系統，提供使用者與管理員
-                  得知最即時的座位使用情況，座位使用狀態分別
-                  為：【異常】、【可使用】、【使用中】與【閒置】。 本團隊採用
-                  HC-SR501 人體紅外線感應模組和 RFID-RC522
-                  模組偵測、判斷使用者與座位的狀 態，並提供 LINE Bot 與 Web
-                  平台的使用者及管理 員進行查看與進階操作。
-                  <br/>
-                  主要負責系統前端，使用React搭配Axious串接資料並使用Antd Design
-                  Guideline。
-                </p>
-
-                <div style={{ position: "relative", bottom: "0" }}>
-                  技術：
-                  <br />
-                  <Tag color="#87d068">React Redux</Tag>
-                  <Tag color="#87d068">Axious</Tag>
-                  <Tag color="#87d068">MySQL</Tag>
-                  <Tag color="#87d068">Node.js</Tag>
-                  <Tag color="#87d068">MQTT</Tag>
-                  <Tag color="#87d068">MicroPython</Tag>
-                </div>
+              <List
+                className="comment-list"
+                // header={`${comment.length} replies`}
+                itemLayout="horizontal"
+                dataSource={comment}
+                renderItem={(item) => (
+                  <li>
+                    <Row>
+                      <Col span={22}>
+                     
+                        <Comment
+                          key={item.id}
+                          author={item.USER.username}
+                          avatar={
+                            <Avatar
+                              style={{
+                                color: "#f56a00",
+                                backgroundColor: "#fde3cf",
+                              }}
+                            >
+                              {item.USER.username}
+                            </Avatar>
+                          }
+                          content={item.context}
+                          datetime={item.updatedAt}
+                        />
+                      </Col>
+                    
+                    
+                     
+                    </Row>
+                  </li>
+                )}
+              />
               </div>
             </Col>
           </Row>
