@@ -67,9 +67,7 @@ export const CollectionCreateForm = ({
       >
         <Row justify="center" align="middle">
           <Space direction="vertical">
-            <div className="center">
-              <h2 style={{ color: "black"}}>{data.id}</h2>
-            </div>
+          
             <Form
               form={form}
               name="form_in_modal"
