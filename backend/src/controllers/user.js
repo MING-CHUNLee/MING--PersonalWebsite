@@ -14,13 +14,13 @@ const { CommentService,UserService } = require("../services/index.js");
 const getAllUserProfile = async (req, res) => {
   try {
  
-    if(!req.body?.id){
+    if(!req.params?.id){
       return res.status(400).json({
         detail: "參數錯誤，請參考文件",
       });
     }
-    const { body } = req;
-    const { id } = body;
+    const { params } = req;
+    const { id } = params;
     const users =await UserService.getAllUserProfile(id);
     const comments =await CommentService.searchALLUserComment(id);
     

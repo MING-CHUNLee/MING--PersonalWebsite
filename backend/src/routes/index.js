@@ -15,7 +15,7 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 router.use("/comment", comment);
 
-router.get('/user',userCotroller.getAllUserProfile)
+router.get('/user/:id',userCotroller.getAllUserProfile)
 router.get('/tourists',userCotroller.touristsLogin)
 router.post('/register',userCotroller.userRegistration)
 router.post('/login',userCotroller.userLogin)
