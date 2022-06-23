@@ -20,7 +20,7 @@ router.post('/search',commentController.SearchComment)
 router.post('/',commentController.createComment)
 router.use('/',memberAuth.isAuthor)
 router.patch('/',commentController.editComment)
-router.delete('/:id',commentController.delectComment)
+router.delete('/:id',commentController.deleteComment)
 
 
 module.exports = router ;

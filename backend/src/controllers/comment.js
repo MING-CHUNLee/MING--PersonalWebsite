@@ -41,7 +41,7 @@ const getAllComment = async (req, res) => {
     try {
         const comment =await CommentService.getUserAllComment();
         return res.status(200).json({
-          detail: "成功取得所有位置資訊",
+          detail: "成功取得",
           data:comment ,
         });
       
@@ -132,7 +132,7 @@ const getAllComment = async (req, res) => {
     }
   };
 
-  const delectComment = async (req, res) => {
+  const deleteComment = async (req, res) => {
     try {
         if(!req.params?.id){
             return res.status(400).json({
@@ -155,5 +155,5 @@ const getAllComment = async (req, res) => {
   };
 
 module.exports = {
-    getAllComment,createComment,editComment,delectComment,SearchComment,getTouristComment,getUserComment
+    getAllComment,createComment,editComment,deleteComment,SearchComment,getTouristComment,getUserComment
   };

@@ -8,17 +8,17 @@
  */
 
 const express = require("express");
-const {userCotroller}=require("../controllers/index.js");
+const {userController}=require("../controllers/index.js");
 const comment =require('./comment')
 const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 router.use("/comment", comment);
 
-router.get('/user/:id',userCotroller.getAllUserProfile)
-router.get('/tourists',userCotroller.touristsLogin)
-router.post('/register',userCotroller.userRegistration)
-router.post('/login',userCotroller.userLogin)
+router.get('/user/:id',userController.getAllUserProfile)
+router.get('/tourists',userController.touristsLogin)
+router.post('/register',userController.userRegistration)
+router.post('/login',userController.userLogin)
 
 
 module.exports = router;
