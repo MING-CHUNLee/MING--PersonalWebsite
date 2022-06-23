@@ -2,7 +2,7 @@
  * @Author: 20181101remon mindy80230@gmail.com
  * @Date: 2022-05-30 09:56:05
  * @LastEditors: 20181101remon mindy80230@gmail.com
- * @LastEditTime: 2022-06-01 15:10:56
+ * @LastEditTime: 2022-06-17 09:53:43
  * @FilePath: \MING--PersonalWebsite\frontend\src\pages\components\HeaderBar.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -10,7 +10,6 @@ import React from "react";
 import { Menu } from "antd";
 import { useNavigate } from "react-router-dom";
 import { Layout, Button, Row, Col, Dropdown, Avatar, Affix } from "antd";
-// import { useNavigate } from "react-router-dom";
 const { Header } = Layout;
 const user = localStorage.getItem("authorized_keys");
 export const HeaderBar = () => {

@@ -288,7 +288,6 @@ const App = () => {
                   </Form>
                 }
               />
-
               <List
                 className="comment-list"
                 // header={`${comment.length} replies`}
@@ -326,7 +325,6 @@ const App = () => {
                             style={{ border: "none" }}
                             ghost
                           />
-
                           <Button
                             type="primary"
                             style={{ border: "none" }}
