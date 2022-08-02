@@ -26,8 +26,6 @@ const getAllComment = async (req, res) => {
           detail: "成功取得所有位置資訊",
           data:comment ,
         });
-      
-    
     } catch (error) {
       return res.status(500).json(
         {
@@ -68,8 +66,6 @@ const getAllComment = async (req, res) => {
           detail: "成功取得所有位置資訊",
           data:comment ,
         });
-      
-    
     } catch (error) {
       return res.status(500).json(
         {
@@ -98,13 +94,11 @@ const getAllComment = async (req, res) => {
         await CommentService.creatComment(body);
         return res.status(200).json({
           detail: "成功新增留言",
-
         });
       
     } catch (error) {
       return res.status(500).json(
         {
-         
         detail: "伺服器內部錯誤"+error+"!!!"
       });
     }
